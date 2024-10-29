@@ -1,11 +1,14 @@
 Package: protemalyze
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Process, Analyze, and Visualize Protein Embeddings Generated From pLMs
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Authors@R: person("Katarina", "Vucic", 
+                  email = "katarina.vucic@mail.utoronto.ca",
+                  role = c("aut", "cre"))
+Maintainer: Katarina Vucic <katarina.vucic@mail.utoronto.ca>
+Description: protemalyze is an R package for processing, analyzing, and 
+    visualizing protein embeddings–vector representations generated using 
+    protein Language Models (pLMs).
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
