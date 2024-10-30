@@ -7,26 +7,25 @@
 loadEmbeddings(path, fileType)
 }
 \arguments{
-\item{path}{A string containing the path to the
-embedding matrix from the root folder. The embedding
-matrix must have proteins in the rows with the
-identifier in the index and embedding dimensions in
-the columns.}
+\item{path}{A string containing the path to the embedding matrix from the
+root folder. The embedding matrix must have proteins in the rows with the
+identifier in the index and embedding dimensions in the columns.}
 
-\item{fileType}{A string specifying the file type of the
-embedding matrix, must be either "csv", "tsv", or "h5".}
+\item{fileType}{A string specifying the file type of the embedding matrix,
+must be either "csv", "tsv", or "h5".}
 }
 \value{
-Returns a DataFrame representing the embedding
-    matrix with proteins in the rows and embedding
-    dimensions in the columns.
+Returns a data frame representing the embedding matrix with proteins
+    in the rows and embedding dimensions in the columns.
 }
 \description{
-A function that loads an embedding matrix given a path
-from the root folder and file type that is either "csv",
-tsv", or "h5".
+A function that loads an embedding matrix given a path from the root folder
+and file type that is either "csv", tsv", or "h5".
 }
 \examples{
-# example code
-
+\dontrun{
+ loadEmbeddings("path/to/file.csv", "csv")
+ loadEmbeddings("path/to/file.tsv", "tsv")
+ loadEmbeddings("path/to/file.h5", "h5")
+}
 }

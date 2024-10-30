@@ -12,8 +12,11 @@ Description: protemalyze is an R package for processing, analyzing, and
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+LazyDataCompression: xz
 RoxygenNote: 7.3.2
 Imports: 
     dplyr,
     readr,
     rhdf5
+Depends: 
+    R (>= 2.10)
