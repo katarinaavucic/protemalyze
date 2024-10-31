@@ -7,11 +7,9 @@
 #'
 #' @source UniProt.
 #'
-#' @format A data frame with 4,401 rows and 1024 total columns.
-#' \describe{
-#'  \item{Index}{UniprotKB identifier for each protein.}
-#'  \item{Columns}{Each embedding dimension from 1 to 1024.}
-#' }
+#' @format A data frame with 4,401 rows and 1024 total columns. In the index are
+#'     UniProt identifiers for each protein, and columns are labelled V1, V2,
+#'     ..., V1024 to represent each dimension of the embedding.
 #' @examples
 #' \dontrun{
 #'  eColiEmbeddingMatrix
