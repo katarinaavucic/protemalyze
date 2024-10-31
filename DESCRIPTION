@@ -17,6 +17,7 @@ RoxygenNote: 7.3.2
 Imports: 
     dplyr,
     readr,
-    rhdf5
+    rhdf5,
+    tibble
 Depends: 
     R (>= 2.10)
