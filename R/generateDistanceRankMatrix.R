@@ -63,5 +63,38 @@ generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
   return(as.data.frame(distMatrix))
 }
 
+#' Generate Rank Matrix
+#'
+#' A function that compute a rank matrix from a distance matrix.
+#'
+#' @param distanceMatrix A data frame representing the distance matrix from
+#'     an embedding matrix. Each value in the distance matrix is the distance
+#'     calculated between the row and column embeddings. The distance matrix
+#'     should contain protein identifies in the row and columns indices, with
+#'     the diagonal all zeroes.
+
+#' @return Returns a data frame representing the rank matrix calculated from
+#'     the distance matrix. Each value in the rank matrix is the rank of the
+#'     distance of the column protein compared to all other distances computed
+#'     with the row protein. These are not reciprocal values, and the diagonal
+#'     (where the row and column protein are the same) is always rank 1. The
+#'     rank matrix contains protein identifies in the row and columns indices.
+#'
+#' @examples
+#' # Generate distance matrix with default setings
+#' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+#'
+#' # Generate rank matrix from distance matrix
+#' eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
+#'
+#' @export
+#' @importFrom matrixStats rowRanks
+generateRankMatrix <- function(distanceMatrix){
+
+  asMatrix <- as.matrix(distanceMatrix)
+  rankMatrix <- matrixStats::rowRanks(asMatrix, ties.method = "min")
+
+  return(rankMatrix)
+}
 
 # [END]
