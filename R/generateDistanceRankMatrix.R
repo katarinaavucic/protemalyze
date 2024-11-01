@@ -77,7 +77,7 @@ generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
 #'     the distance matrix. Each value in the rank matrix is the rank of the
 #'     distance of the column protein compared to all other distances computed
 #'     with the row protein. These are not reciprocal values, and the diagonal
-#'     (where the row and column protein are the same) is always rank 1. The
+#'     (where the row and column protein are the same) is always rank 0. The
 #'     rank matrix contains protein identifies in the row and columns indices.
 #'
 #' @examples
@@ -94,7 +94,9 @@ generateRankMatrix <- function(distanceMatrix){
   asMatrix <- as.matrix(distanceMatrix)
   rankMatrix <- matrixStats::rowRanks(asMatrix, ties.method = "min")
 
-  return(rankMatrix)
+  # subtract 1 so that the diagonal is rank 0
+  rankDF <- as.data.frame(rankMatrix - 1)
+  return(rankDF)
 }
 
 # [END]

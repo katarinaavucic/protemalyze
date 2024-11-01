@@ -18,7 +18,7 @@ Returns a data frame representing the rank matrix calculated from
     the distance matrix. Each value in the rank matrix is the rank of the
     distance of the column protein compared to all other distances computed
     with the row protein. These are not reciprocal values, and the diagonal
-    (where the row and column protein are the same) is always rank 1. The
+    (where the row and column protein are the same) is always rank 0. The
     rank matrix contains protein identifies in the row and columns indices.
 }
 \description{
