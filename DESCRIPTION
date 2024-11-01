@@ -16,6 +16,7 @@ LazyDataCompression: xz
 RoxygenNote: 7.3.2
 Imports: 
     dplyr,
+    parallelDist,
     readr,
     rhdf5,
     tibble
