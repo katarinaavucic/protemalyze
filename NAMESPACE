@@ -2,6 +2,8 @@
 
 export(generateDistanceMatrix)
 export(generateRankMatrix)
+export(getClosestPairs)
+export(getFarthestPairs)
 export(loadEmbeddings)
 export(processData)
 import(dplyr)

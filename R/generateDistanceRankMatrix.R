@@ -72,7 +72,7 @@ generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
 #'     calculated between the row and column embeddings. The distance matrix
 #'     should contain protein identifies in the row and columns indices, with
 #'     the diagonal all zeroes.
-
+#'
 #' @return Returns a data frame representing the rank matrix calculated from
 #'     the distance matrix. Each value in the rank matrix is the rank of the
 #'     distance of the column protein compared to all other distances computed
