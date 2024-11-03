@@ -17,4 +17,26 @@
 #' @source https://www.uniprot.org/help/downloads#embeddings
 "eColiEmbeddingMatrix"
 
+#' Paralog Mapping for Escherichia coli
+#'
+#' A one-to-many paralog mapping for Escherichia coli generated from the
+#' Orthologous Matrix (OMA) Browser using the Genome Pair View tool with both
+#' species as `Escherichia coli str. K-12 substr. MG1655 (ECOLI)`. Identifiers
+#' were converted to UniProt using the Identifier Mapping file for download on
+#' the OMA Browser. Processing was done to remove rows where either protein was
+#' not present in the eColiEmbeddingMatrix to reduce the size of the file.
+#'
+#' @source Orthologous Matrix (OMA) Browser
+#'
+#' @format A data frame with 7,550 rows and 2 total columns. Columns Protein 1
+#'     and Protein 2 are UniProt identifiers, and each row represents one
+#'     paralogous pair.
+#'
+#' @examples
+#' \dontrun{
+#'  eColiParalogMapping
+#' }
+#' @source https://omabrowser.org/oma/genomePW/
+"eColiParalogMapping"
+
 # [END]
