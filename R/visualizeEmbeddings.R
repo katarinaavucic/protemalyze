@@ -1,0 +1,129 @@
+#' Plot the Distribution of Embedding Distances in a Mapping
+#'
+#' A function that plots the distribution of embedding distances from a distance
+#'     matrix according to a mapping.
+#'
+#' @param distanceMatrix A data frame representing the distance matrix from
+#'     an embedding matrix. Each value in the distance matrix is the distance
+#'     calculated between the row and column embeddings. The distance matrix
+#'     should contain protein identifies in the row and columns indices, with
+#'     the diagonal all zeroes.
+#'
+#' @param mapping A data frame with two columns of protein identifiers matching
+#'     the identifiers used for the embedding matrix.
+#'
+#' @return Produces a histogram of the distribution of embedding distances in a
+#'     mapping.
+#'
+#' @examples
+#' # Generate distance matrix with default setings
+#' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+#'
+#' # Visualize distance distribution by mapping
+#' visualizeDistanceDistribution(eColiDistMatrix, eColiParalogMapping)
+#'
+#' @import ggplot2
+#' @importFrom stats median
+#' @export
+visualizeDistanceDistribution <- function(distanceMatrix, mapping){
+
+  mappingDistances <- getDistancesByMapping(distanceMatrix, mapping)
+
+  # Calculate binwidth based on data range put in 25 bins
+  dataRange <- max(mappingDistances$Distance) - min(mappingDistances$Distance)
+  binwidth <- dataRange / 25
+
+  plot <- ggplot2::ggplot(mappingDistances, ggplot2::aes(x = Distance)) +
+    # Add median line
+    ggplot2::geom_histogram(binwidth = binwidth, fill = "#b78ec1",
+                            color = "lightgray", alpha = 0.9, boundary = 0) +
+    ggplot2::geom_vline(ggplot2::aes(xintercept = stats::median(Distance)),
+                        color = "darkred", linetype = "dashed",
+                        linewidth = 0.5) +
+    # Add labels
+    ggplot2::labs(
+      title = "Distribution of Embedding Distances in Mapping",
+      subtitle = paste("Median Distance:",
+                       stats::median(mappingDistances$Distance)),
+      x = "Distance",
+      y = "Number of Proteins"
+    ) +
+    # Add formatting
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(size = 16, face = "bold"),
+      plot.subtitle = ggplot2::element_text(size = 12, color = "dimgray"),
+      axis.title = ggplot2::element_text(size = 12),
+      axis.text = ggplot2::element_text(size = 10),
+      panel.grid.minor = ggplot2::element_blank()
+    )
+  return(plot)
+}
+
+
+#' Plot the Distribution of Embedding Ranks in a Mapping
+#'
+#' A function that plots the distribution of embedding ranks from a rank matrix
+#'     according to a mapping.
+#'
+#' @param rankMatrix A data frame representing the rank matrix calculated from
+#'     an embedding matrix. Each value in the rank matrix is the rank of the
+#'     distance of the column protein compared to all other distances computed
+#'     with the row protein. These are not reciprocal values, and the diagonal
+#'     (where the row and column protein are the same) is always rank 0. The
+#'     rank matrix contains protein identifies in the row and columns indices.
+#'
+#' @param mapping A data frame with two columns of protein identifiers matching
+#'     the identifiers used for the embedding matrix.
+#'
+#' @return Produces a histogram of the distribution of embedding ranks in a
+#'     mapping.
+#'
+#' @examples
+#' # Generate distance matrix with default setings
+#' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+#'
+#' # Generate rank matrix from distance matrix
+#' eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
+#'
+#' # Visualize rank distribution by mapping
+#' visualizeRankDistribution(eColiRankMatrix, eColiParalogMapping)
+#'
+#' @import ggplot2
+#' @importFrom stats median
+#' @export
+visualizeRankDistribution <- function(rankMatrix, mapping){
+
+  mappingRanks <- getRanksByMapping(rankMatrix, mapping)
+  # Calculate binwidth based on data range put in 25 bins
+  dataRange <- max(mappingRanks$Rank) - min(mappingRanks$Rank)
+  binwidth <- dataRange / 25
+
+  plot <- ggplot2::ggplot(mappingRanks, ggplot2::aes(x = Rank)) +
+    # Add median line
+    ggplot2::geom_histogram(binwidth = binwidth, fill = "#b78ec1",
+                            color = "lightgray", alpha = 0.9, boundary = 0) +
+    ggplot2::geom_vline(ggplot2::aes(xintercept = stats::median(Rank)),
+                        color = "darkred", linetype = "dashed",
+                        linewidth = 0.5) +
+    # Add labels
+    ggplot2::labs(
+      title = "Distribution of Embedding Ranks in Mapping",
+      subtitle = paste("Median Rank:", stats::median(mappingRanks$Rank)),
+      x = "Rank",
+      y = "Number of Proteins"
+    ) +
+    # Add formatting
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(size = 16, face = "bold"),
+      plot.subtitle = ggplot2::element_text(size = 12, color = "dimgray"),
+      axis.title = ggplot2::element_text(size = 12),
+      axis.text = ggplot2::element_text(size = 10),
+      panel.grid.minor = ggplot2::element_blank()
+    )
+
+  return(plot)
+}
+
+# [END]
