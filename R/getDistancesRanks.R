@@ -49,7 +49,7 @@ getDistancesByMapping <- function(distanceMatrix, mapping){
   distancesByMapping <-
     distancesByMapping[!is.na(distancesByMapping$Distance), ]
 
-  return(as.matrix(distancesByMapping))
+  return(distancesByMapping)
 }
 
 
@@ -106,7 +106,7 @@ getRanksByMapping <- function(rankMatrix, mapping){
   # Remove NA results (pairs not found in rankMatrix)
   ranksByMapping <- ranksByMapping[!is.na(ranksByMapping$Rank), ]
 
-  return(as.matrix(ranksByMapping))
+  return(ranksByMapping)
 }
 
 # [END]
