@@ -1,3 +1,41 @@
+#' Plot an Interactive UMAP From an Embedding Matrix
+#'
+#' A function that creates an interactive plot of the UMAP created from an
+#'     embedding matrix.
+#'
+#' @param embeddingMatrix A data frame containing an embedding matrix with
+#'     identifiers in the index and columns representing embedding dimensions.
+#'
+#' @return Produces an interactive plot of the UMAP created from an
+#'     embedding matrix.
+#'
+#' @examples
+#' # Plot an interactive UMAP
+#' visualizeEmbeddingUMAP(eColiEmbeddingMatrix)
+#'
+#' @import dplyr
+#' @import umap
+#' @importFrom plotly plot_ly layout
+#' @export
+visualizeEmbeddingUMAP <- function(embeddingMatrix){
+  # generate umap from embedding matrix
+  umap <- umap::umap(embeddingMatrix, n_components = 2)
+  layout <- data.frame(umap[["layout"]])
+
+  plot <- plotly::plot_ly(data = layout, x = ~X1, y = ~X2, type = "scatter",
+                          mode = "markers", text = rownames(layout),
+                          hoverinfo = "text",
+                          marker = list(size = 10, opacity = 0.8,
+                                        color = '#b78ec1',
+                                        line = list(color = '#884499',
+                                                    width = 1)
+                                        )) %>%
+          plotly::layout(plot_bgcolor = "lightgray",
+                                    xaxis = list(title = "UMAP1"),
+                                    yaxis = list(title = "UMAP2"))
+  return(plot)
+}
+
 #' Plot the Distribution of Embedding Distances in a Mapping
 #'
 #' A function that plots the distribution of embedding distances from a distance

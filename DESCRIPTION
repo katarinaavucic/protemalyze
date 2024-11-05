@@ -19,8 +19,10 @@ Imports:
     ggplot2,
     matrixStats,
     parallelDist,
+    plotly,
     readr,
     rhdf5,
-    tibble
+    tibble,
+    umap
 Depends: 
     R (>= 2.10)
