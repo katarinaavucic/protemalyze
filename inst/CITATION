@@ -1,0 +1,13 @@
+citHeader("To cite protemalyze in publications use:")
+
+citEntry(entry = "Unpublished",
+  title        = "protemalyze",
+  author       = "Katarina Vucic",
+  note         = "Unpublished",
+  year         = "2024",
+
+  textVersion  =
+  paste("Vucic, K. (2024) protemalyze: Process, Analyze, and Visualize Protein
+        Embeddings Generated From pLMs. Unpublished.
+        URL https://github.com/katarinaavucic/protemalyze.")
+)
