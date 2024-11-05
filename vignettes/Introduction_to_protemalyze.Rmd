@@ -1,0 +1,137 @@
+---
+title: "Introduction_to_protemalyze"
+output: rmarkdown::html_vignette
+fig_width: 40
+fig_height: 20
+vignette: >
+  %\VignetteIndexEntry{Introduction_to_protemalyze}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(protemalyze)
+```
+
+## Overview
+Understanding the functional and evolutionary relationships between proteins is a crucial field of study in evolutionary biology. Proteins that share a common evolutionary ancestor can be classified as orthologs or paralogs. Orthologs are genes that diverged due to speciation events, meaning that they are found in different species but have retained similar functions. Paralogs, on the other hand, result from gene duplication events within the same species and can evolve new or specialized functions (Koonin, 2005).
+
+A widely cited hypothesis known as the Ortholog Conjecture proposes that orthologs are more likely to retain their original functions than paralogs (Altenhoff et al., 2012). This makes paralogous proteins important to study because their evolution can reveal how new protein functions arise and how genetic diversity within a species develops over time.
+
+In this vignette, we will use the **protemalyze** package to analyze protein embeddings from *Escherichia coli* (E. coli) and explore the relationship between paralogous proteins. We will visualize their similarities, calculate distances, and examine how protein divergence within a single species can shed light on genome evolution.
+
+
+## Load and Visualize an Embedding Matrix
+
+For this analysis, we will utilize protein embeddings from the UniProt database, which were generated using the ProtT5 model (prottrans_t5_xl_u50). This model provides a high-dimensional representation (1024 dimensions) of each protein's sequence. We have extracted the embeddings for the reference proteome of Escherichia coli and stored them in the `eColiEmbeddingMatrix` dataset. The matrix contains 4,401 rows, each representing a protein, and 1024 columns corresponding to the dimensions of the embeddings.
+
+First, let’s load the embedding matrix and apply pre-processing:
+
+```{r}
+embeddingMatrix <- processData(eColiEmbeddingMatrix)
+```
+
+Next, we will visualize the embeddings by reducing the dimensionality from 1024 to 2 using UMAP (Uniform Manifold Approximation and Projection), which is a popular method for visualizing high-dimensional data. This will help us see how similar the proteins are to each other in the embedding space. 
+
+Let's visualize this UMAP representation:
+
+```{r}
+visualizeEmbeddingUMAP(embeddingMatrix)
+```
+
+In the UMAP plot, each point represents a protein, and proteins that are located closer together have similar embeddings and are likely functionally or structurally similar. Conversely, proteins that are farther apart may differ significantly in function or structure. Notice that there are clusters of proteins that are more similar to each other as well as outlier groups that may have divergent structure and function.
+
+
+## Analyzing Distance and Ranks
+
+The next step is to compute the **pairwise distances** between proteins in the embedding space. This distance matrix will give us a quantitative measure of how similar or different each protein is from every other protein based on their embeddings. 
+
+We'll generate this distance matrix using the following function:
+
+```{r}
+eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+```
+
+While the distance matrix gives us the raw measure of similarity, these distances are a measure in the embedding space that do not have a direct interpretation. Instead, we will interpret these distances in terms of ranks. For each protein, we can calculate how each protein ranks relative to all other proteins in the matrix. This allows us to look in terms of how close the protein is out of all proteins without worrying about the scale of the distance values.
+
+We can calculate the rank matrix as follows:
+
+```{r}
+eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
+```
+
+The rank matrix gives us a relative measure of closeness for each protein. We can retrieve the closest and farthest pair for each protein by running the following methods:
+
+```{r}
+closestPairs <- getFarthestPairs(eColiDistMatrix)
+farthestPairs <- getFarthestPairs(eColiDistMatrix)
+```
+
+Once we have the closest and farthest pairs, we can explore whether any of these relationships correlate with known biological information. For example, certain pairs of proteins could share functional similarities or be involved in the same biological pathway. Farthest pairs could have characteristics that set them apart, such as divergent evolutionary histories, possibly leading to functional differences. 
+
+
+## Analyzing Protein Sequence Similarities for Paralogous Proteins
+
+Now, let's focus specifically on paralogs, which arise from gene duplication events within the same species. Studying paralogous proteins may provide insights into functional divergence and the evolutionary mechanisms driving genome complexity.
+
+To analyze the similarity of paralogs in E. coli, we will use a one-to-many paralog mapping for E. coli generated from the Orthologous Matrix (OMA) Browser using the Genome Pair View tool with both species as `Escherichia coli str. K-12 substr. MG1655 (ECOLI)`. 
+The protein identifiers were converted to UniProt using the Identifier Mapping file for download on the OMA Browser, and processing was done to remove rows where either protein was not present in the `eColiEmbeddingMatrix` to reduce the size of the file. This file is saved in the package and can be accessed at `eColiParalogMapping`.
+
+We begin by extracting the distances between paralogous proteins using the distance matrix:
+
+```{r}
+paralogDistances <- getDistancesByMapping(eColiDistMatrix, eColiParalogMapping)
+```
+
+Additionally, we will extract the ranks between paralogous proteins using the rank matrix.
+
+```{r}
+paralogRanks <- getRanksByMapping(eColiRankMatrix, eColiParalogMapping)
+```
+
+To analyze the trends in the distances and ranks of the paralogs, we can run:
+
+```{r}
+paralogDistances <- getDistancesByMapping(eColiDistMatrix, eColiParalogMapping)
+summary(paralogDistances)
+```
+
+For a better interpretation, we can look at the ranks of the paralogs:
+```{r}
+paralogRanks <- getRanksByMapping(eColiRankMatrix, eColiParalogMapping)
+summary(paralogRanks)
+```
+
+The minimum rank is 0, which occurs when two proteins are identical. The maximum value, is 2641, which indicates that the proteins sequences are very different, which may suggest functional divergence. The majority of paralogs, however, are within the top 23 proteins for their pair. 
+
+To visualize the distribution of the distances between paralogous proteins in E. coli, we can run:
+
+```{r}
+visualizeDistanceDistribution(eColiDistMatrix, eColiParalogMapping)
+```
+
+We can see that there is a large distribution of distances for the paralogs in E. coli. The median distance is 0.61, and the majority of proteins fall in that range. This suggests that while many paralogs share some similarity, there is notable divergence between them over time.
+
+We can perform a similar analysis by visualizing the rank distribution:
+
+```{r}
+visualizeRankDistribution(eColiRankMatrix, eColiParalogMapping)
+```
+
+The median rank is 6, meaning half of the paralogs are within the top 6 closest proteins for their pair. This indicates that many paralogs retain some sequence similarity, but some have larger ranks. These pairs with larger ranks may be cases where the paralogs have evolved different functions. By focusing on pairs with higher ranks, we can identify proteins that might have undergone functional change.
+
+## Conclusion
+
+In this vignette, we showed how **protemalyze** can be used to analyze, visualize, and interpret protein embeddings to explore the similarities between paralogous proteins in the embedding space in *Escherichia coli*. By combining protein embeddings with evolutionary mappings, we can gain insight into the functional evolution of paralogs within a species. 
+
+## Citations
+
+- [Koonin, E. V. (2005). Orthologs, Paralogs, and Evolutionary Genomics. Annual Review of Genetics, 39(1), 309–338.](https://doi.org/10.1146/annurev.genet.39.073003.114725)
+- [Altenhoff, A. M., Studer, R. A., Robinson-Rechavi, M., & Dessimoz, C. (2012). Resolving the Ortholog Conjecture: Orthologs Tend to Be Weakly, but Significantly, More Similar in Function than Paralogs. PLoS Computational Biology, 8(5), e1002514.](https://doi.org/10.1371/journal.pcbi.1002514)

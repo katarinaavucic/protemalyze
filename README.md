@@ -97,6 +97,8 @@ called eColiEmbeddingMatrix and a mapping of the paralogs in Escherichia
 coli, called eColiParalogMapping. Refer to package vignettes for more
 details. An overview of the package is illustrated below.
 
+![](./inst/extdata/protemalyzeOverview.jpg)
+
 ## Contributions
 
 The creator and maintainer of this package is Katarina Vucic, an
