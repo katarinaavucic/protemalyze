@@ -30,7 +30,8 @@ visualizeEmbeddingUMAP <- function(embeddingMatrix){
                                         line = list(color = '#884499',
                                                     width = 1)
                                         )) %>%
-          plotly::layout(plot_bgcolor = "lightgray",
+          plotly::layout(title = "UMAP of Embedding Matrix",
+                         plot_bgcolor = "lightgray",
                                     xaxis = list(title = "UMAP1"),
                                     yaxis = list(title = "UMAP2"))
   return(plot)
