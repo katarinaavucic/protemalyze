@@ -6,9 +6,14 @@ Authors@R: person("Katarina", "Vucic",
                   email = "katarina.vucic@mail.utoronto.ca",
                   role = c("aut", "cre"))
 Maintainer: Katarina Vucic <katarina.vucic@mail.utoronto.ca>
-Description: protemalyze is an R package for processing, analyzing, and 
-    visualizing protein embeddings–vector representations generated using 
-    protein Language Models (pLMs).
+Description: protemalyze is an R package designed to analyze protein embeddings 
+    derived from protein Language Models (pLMs). Protein embeddings are 
+    numerical representations of protein sequences that have been shown to 
+    capture essential information encoded in the protein. These embeddings are 
+    particularly useful for identifying structurally or functionally similar 
+    proteins. protemalyze provides an accessible entry point for researchers to 
+    explore data from pLMs without having to engage with the technical details 
+    of the underlying methods.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -26,3 +31,7 @@ Imports:
     umap
 Depends: 
     R (>= 2.10)
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

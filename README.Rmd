@@ -31,7 +31,7 @@ You can install the development version of protemalyze like so:
 ``` r
 install.packages("devtools")
 library("devtools")
-devtools::install_github("katarinaav/protemalyze", build_vignettes = TRUE)
+devtools::install_github("katarinaavucic/protemalyze", build_vignettes = TRUE)
 library("protemalyze")
 ```
 
