@@ -171,7 +171,8 @@ Raw per-protein embeddings for E. coli, stored in
   D., & Rost, B. (2021). ProtTrans: Towards Cracking the Language of
   Lifes Code Through Self-Supervised Deep Learning and High Performance
   Computing. IEEE Transactions on Pattern Analysis and Machine
-  Intelligence, 44(10), 1–1.](ttps://doi.org/10.1109/tpami.2021.3095381)
+  Intelligence, 44(10),
+  1–1.](https://doi.org/10.1109/tpami.2021.3095381)
 - [Fischer B, Smith M, Pau G (2023). rhdf5: R Interface to HDF5. R
   package version
   2.44.0.](https://bioconductor.org/packages/release/bioc/html/rhdf5.html)
