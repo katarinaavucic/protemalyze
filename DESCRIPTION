@@ -11,8 +11,8 @@ Description: protemalyze is an R package designed to analyze protein embeddings
     numerical representations of protein sequences that have been shown to 
     capture essential information encoded in the protein. These embeddings are 
     particularly useful for identifying structurally or functionally similar 
-    proteins. protemalyze provides an accessible entry point for researchers to 
-    explore data from pLMs without having to engage with the technical details 
+    proteins. protemalyze provides an accessible way for researchers to explore 
+    data generated from pLMs without having to deal with the technical details 
     of the underlying methods.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -33,5 +33,7 @@ Depends:
     R (>= 2.10)
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/testthat/edition: 3
