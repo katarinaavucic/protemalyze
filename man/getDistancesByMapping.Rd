@@ -31,5 +31,4 @@ eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
 # Retrieve distances by mapping
 eColiParalogDistances <- getDistancesByMapping(eColiDistMatrix,
                                                 eColiParalogMapping)
-
 }

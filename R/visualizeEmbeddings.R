@@ -18,10 +18,12 @@
 #' @importFrom plotly plot_ly layout
 #' @export
 visualizeEmbeddingUMAP <- function(embeddingMatrix){
-  # generate umap from embedding matrix
+
+  # Generate umap from embedding matrix.
   umap <- umap::umap(embeddingMatrix, n_components = 2)
   layout <- data.frame(umap[["layout"]])
 
+  # Create interactive plot.
   plot <- plotly::plot_ly(data = layout, x = ~X1, y = ~X2, type = "scatter",
                           mode = "markers", text = rownames(layout),
                           hoverinfo = "text",
@@ -66,20 +68,21 @@ visualizeEmbeddingUMAP <- function(embeddingMatrix){
 #' @export
 visualizeDistanceDistribution <- function(distanceMatrix, mapping){
 
+  # Retrieve distances for the mapping.
   mappingDistances <- getDistancesByMapping(distanceMatrix, mapping)
 
-  # Calculate binwidth based on data range put in 25 bins
+  # Calculate binwidth based on data range put in 25 bins.
   dataRange <- max(mappingDistances$Distance) - min(mappingDistances$Distance)
   binwidth <- dataRange / 25
 
   plot <- ggplot2::ggplot(mappingDistances, ggplot2::aes(x = Distance)) +
-    # Add median line
+    # Add median line.
     ggplot2::geom_histogram(binwidth = binwidth, fill = "#b78ec1",
                             color = "lightgray", alpha = 0.9, boundary = 0) +
     ggplot2::geom_vline(ggplot2::aes(xintercept = stats::median(Distance)),
                         color = "darkred", linetype = "dashed",
                         linewidth = 0.5) +
-    # Add labels
+    # Add labels.
     ggplot2::labs(
       title = "Distribution of Embedding Distances in Mapping",
       subtitle = paste("Median Distance:",
@@ -87,7 +90,7 @@ visualizeDistanceDistribution <- function(distanceMatrix, mapping){
       x = "Distance",
       y = "Number of Proteins"
     ) +
-    # Add formatting
+    # Add formatting.
     ggplot2::theme_minimal() +
     ggplot2::theme(
       plot.title = ggplot2::element_text(size = 16, face = "bold"),
@@ -96,6 +99,7 @@ visualizeDistanceDistribution <- function(distanceMatrix, mapping){
       axis.text = ggplot2::element_text(size = 10),
       panel.grid.minor = ggplot2::element_blank()
     )
+
   return(plot)
 }
 
@@ -133,26 +137,28 @@ visualizeDistanceDistribution <- function(distanceMatrix, mapping){
 #' @export
 visualizeRankDistribution <- function(rankMatrix, mapping){
 
+  # Retrieve distances for the mapping.
   mappingRanks <- getRanksByMapping(rankMatrix, mapping)
-  # Calculate binwidth based on data range put in 25 bins
+
+  # Calculate binwidth based on data range put in 25 bins.
   dataRange <- max(mappingRanks$Rank) - min(mappingRanks$Rank)
   binwidth <- dataRange / 25
 
   plot <- ggplot2::ggplot(mappingRanks, ggplot2::aes(x = Rank)) +
-    # Add median line
+    # Add median line.
     ggplot2::geom_histogram(binwidth = binwidth, fill = "#b78ec1",
                             color = "lightgray", alpha = 0.9, boundary = 0) +
     ggplot2::geom_vline(ggplot2::aes(xintercept = stats::median(Rank)),
                         color = "darkred", linetype = "dashed",
                         linewidth = 0.5) +
-    # Add labels
+    # Add labels.
     ggplot2::labs(
       title = "Distribution of Embedding Ranks in Mapping",
       subtitle = paste("Median Rank:", stats::median(mappingRanks$Rank)),
       x = "Rank",
       y = "Number of Proteins"
     ) +
-    # Add formatting
+    # Add formatting.
     ggplot2::theme_minimal() +
     ggplot2::theme(
       plot.title = ggplot2::element_text(size = 16, face = "bold"),

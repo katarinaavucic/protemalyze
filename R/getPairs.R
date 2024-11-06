@@ -25,6 +25,8 @@
 #'
 #' @export
 getClosestPairs <- function(rankMatrix){
+
+  # Convert to matrix, perform computation, convert back to data frame for user.
   asMatrix <- as.matrix(rankMatrix)
 
   # The closest protein is at rank 1, since rank 0 is itself.
@@ -67,6 +69,8 @@ getClosestPairs <- function(rankMatrix){
 #'
 #' @export
 getFarthestPairs <- function(rankMatrix){
+
+  # Convert to matrix, perform computation, convert back to data frame for user.
   asMatrix <- as.matrix(rankMatrix)
 
   # The farthest protein is at the number of rows minus one, since we subtract

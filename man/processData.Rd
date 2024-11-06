@@ -20,16 +20,7 @@ A function that removes NULL and duplicate values from a data frame
 representing an embedding matrix.
 }
 \examples{
-# Check the original matrix dimensions
-embeddingMatrix <- eColiEmbeddingMatrix
-print(dim(embeddingMatrix))
+# Process the embedding matrix
+processedEmbeddingMatrix <- processData(eColiEmbeddingMatrix)
 
-# Add NULL values to 100 rows
-set.seed(42)
-indices_to_nullify <- sample(nrow(embeddingMatrix), 100)
-embeddingMatrix[indices_to_nullify, ] <- NA
-
-# Process the data
-processedEmbeddingMatrix <- processData(embeddingMatrix)
-print(dim(processedEmbeddingMatrix))
 }

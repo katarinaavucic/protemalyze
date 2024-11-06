@@ -22,21 +22,21 @@
 #' # Retrieve distances by mapping
 #' eColiParalogDistances <- getDistancesByMapping(eColiDistMatrix,
 #'                                                 eColiParalogMapping)
-#'
 #' @export
 getDistancesByMapping <- function(distanceMatrix, mapping){
 
+  # Convert to matrix, perform computation, convert back to data frame for user.
   asMatrix <- as.matrix(distanceMatrix)
 
-  # Convert mapping to character vectors for faster indexing
+  # Convert mapping to character vectors for faster indexing.
   protein1 <- as.character(mapping[[1]])
   protein2 <- as.character(mapping[[2]])
 
-  # Locate protein indexes
+  # Locate protein indexes.
   protein1Index <- match(protein1, rownames(distanceMatrix))
   protein2Index <- match(protein2, colnames(distanceMatrix))
 
-  # Get distances for (protein1Index, protein2Index) pairs
+  # Get distances for (protein1Index, protein2Index) pairs.
   distances <- distanceMatrix[cbind(protein1Index, protein2Index)]
 
   distancesByMapping <- data.frame(
@@ -45,7 +45,7 @@ getDistancesByMapping <- function(distanceMatrix, mapping){
     Distance = distances
   )
 
-  # Remove NA results (pairs not found in distanceMatrix)
+  # Remove NA results (pairs not found in distanceMatrix).
   distancesByMapping <-
     distancesByMapping[!is.na(distancesByMapping$Distance), ]
 
@@ -84,17 +84,18 @@ getDistancesByMapping <- function(distanceMatrix, mapping){
 #' @export
 getRanksByMapping <- function(rankMatrix, mapping){
 
+  # Convert to matrix, perform computation, convert back to data frame for user.
   asMatrix <- as.matrix(rankMatrix)
 
-  # Convert mapping to character vectors for faster indexing
+  # Convert mapping to character vectors for faster indexing.
   protein1 <- as.character(mapping[[1]])
   protein2 <- as.character(mapping[[2]])
 
-  # Locate protein indexes
+  # Locate protein indexes.
   protein1Index <- match(protein1, rownames(rankMatrix))
   protein2Index <- match(protein2, colnames(rankMatrix))
 
-  # Get ranks for (protein1Index, protein2Index) pairs
+  # Get ranks for (protein1Index, protein2Index) pairs.
   ranks <- rankMatrix[cbind(protein1Index, protein2Index)]
 
   ranksByMapping <- data.frame(
@@ -103,7 +104,7 @@ getRanksByMapping <- function(rankMatrix, mapping){
     Rank = ranks
   )
 
-  # Remove NA results (pairs not found in rankMatrix)
+  # Remove NA results (pairs not found in rankMatrix).
   ranksByMapping <- ranksByMapping[!is.na(ranksByMapping$Rank), ]
 
   return(ranksByMapping)

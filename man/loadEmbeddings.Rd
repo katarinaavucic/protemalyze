@@ -9,7 +9,9 @@ loadEmbeddings(path, fileType)
 \arguments{
 \item{path}{A string containing the path to the embedding matrix from the
 root folder. The embedding matrix must have proteins in the rows with the
-identifier in the index and embedding dimensions in the columns.}
+identifier in the index and embedding dimensions in the columns. If
+stored in an h5 file, this function assumes each row is a dataset under
+the root path.}
 
 \item{fileType}{A string specifying the file type of the embedding matrix,
 must be either "csv", "tsv", or "h5".}
@@ -28,4 +30,5 @@ and file type that is either "csv", tsv", or "h5".
  loadEmbeddings("path/to/file.tsv", "tsv")
  loadEmbeddings("path/to/file.h5", "h5")
 }
+
 }

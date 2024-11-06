@@ -36,10 +36,10 @@ validMetrics <- c("bhjattacharyya", "bray", "canberra", "chord",
 #' # Generate distance matrix with default setings
 #' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
 #'
+#' \dontrun{
 #' # Generate distance matrix with an alternative metric
 #' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix,
 #'                                           metric="fJaccard")
-#' \dontrun{
 #' # Generate distance matrix with a set amount of threads
 #' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix,
 #'                                            threads=4)
@@ -50,16 +50,22 @@ validMetrics <- c("bhjattacharyya", "bray", "canberra", "chord",
 generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
                                    threads=NULL){
 
+  # If metric is invalid, return an error
   if (metric != "euclidean" && !(metric %in% validMetrics)) {
     stop(paste("Invalid metric:", metric, ". Valid options are:",
                paste(validMetrics, collapse = ", ")))
-  } else {
-    # do nothing
+  }
+  # Otherwise, do nothing.
+  else {
+    # Do nothing.
   }
 
+  # Convert to matrix, perform optimized distance computation, convert back to
+  # data frame for user.
   asMatrix <- as.matrix(embeddingMatrix)
   distMatrix <- as.matrix(parallelDist::parDist(asMatrix, method=metric,
                                                 threads=threads))
+
   return(as.data.frame(distMatrix))
 }
 
@@ -91,11 +97,15 @@ generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
 #' @importFrom matrixStats rowRanks
 generateRankMatrix <- function(distanceMatrix){
 
+  # Convert to matrix, perform optimized ranking computation, convert back to
+  # data frame for user.
   asMatrix <- as.matrix(distanceMatrix)
   rankMatrix <- matrixStats::rowRanks(asMatrix, ties.method = "min")
 
-  # subtract 1 so that the diagonal is rank 0
+  # Subtract 1 so that the diagonal is rank 0 and closest (not the same) protein
+  # has a rank of 1.
   rankDF <- as.data.frame(rankMatrix - 1)
+
   return(rankDF)
 }
 

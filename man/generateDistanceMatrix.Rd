@@ -32,10 +32,10 @@ A function that compute a distance matrix for an embedding matrix.
 # Generate distance matrix with default setings
 eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
 
+\dontrun{
 # Generate distance matrix with an alternative metric
 eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix,
                                           metric="fJaccard")
-\dontrun{
 # Generate distance matrix with a set amount of threads
 eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix,
                                            threads=4)
