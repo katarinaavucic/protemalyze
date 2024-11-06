@@ -25,10 +25,13 @@ A function that plots the distribution of embedding distances from a distance
     matrix according to a mapping.
 }
 \examples{
+\dontrun{
 # Generate distance matrix with default setings
 eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
 
 # Visualize distance distribution by mapping
-visualizeDistanceDistribution(eColiDistMatrix, eColiParalogMapping)
+mapping <- eColiParalogMapping
+visualizeDistanceDistribution(eColiDistMatrix, mapping)
+}
 
 }

@@ -29,10 +29,11 @@ Returns a data frame representing the distance matrix calculated from
 A function that compute a distance matrix for an embedding matrix.
 }
 \examples{
-# Generate distance matrix with default setings
-eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
-
 \dontrun{
+# Generate distance matrix with default setings
+embeddingMatrix <- eColiEmbeddingMatrix
+eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
+
 # Generate distance matrix with an alternative metric
 eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix,
                                           metric="fJaccard")

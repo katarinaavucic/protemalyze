@@ -25,10 +25,12 @@ Returns a data frame representing the rank matrix calculated from
 A function that compute a rank matrix from a distance matrix.
 }
 \examples{
+\dontrun{
 # Generate distance matrix with default setings
-eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+embeddingMatrix <- eColiEmbeddingMatrix
+eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
 
 # Generate rank matrix from distance matrix
 eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
-
+}
 }

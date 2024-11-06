@@ -33,10 +33,11 @@ validMetrics <- c("bhjattacharyya", "bray", "canberra", "chord",
 #'     and columns indices, and the diagonal is all zeroes.
 #'
 #' @examples
-#' # Generate distance matrix with default setings
-#' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
-#'
 #' \dontrun{
+#' # Generate distance matrix with default setings
+#' embeddingMatrix <- eColiEmbeddingMatrix
+#' eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
+#'
 #' # Generate distance matrix with an alternative metric
 #' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix,
 #'                                           metric="fJaccard")
@@ -87,12 +88,14 @@ generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
 #'     rank matrix contains protein identifies in the row and columns indices.
 #'
 #' @examples
+#' \dontrun{
 #' # Generate distance matrix with default setings
-#' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+#' embeddingMatrix <- eColiEmbeddingMatrix
+#' eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
 #'
 #' # Generate rank matrix from distance matrix
 #' eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
-#'
+#' }
 #' @export
 #' @importFrom matrixStats rowRanks
 generateRankMatrix <- function(distanceMatrix){

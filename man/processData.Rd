@@ -20,7 +20,10 @@ A function that removes NULL and duplicate values from a data frame
 representing an embedding matrix.
 }
 \examples{
+\dontrun{
 # Process the embedding matrix
-processedEmbeddingMatrix <- processData(eColiEmbeddingMatrix)
+embeddingMatrix <- eColiEmbeddingMatrix
+processedEmbeddingMatrix <- processData(embeddingMatrix)
+}
 
 }

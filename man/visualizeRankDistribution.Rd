@@ -26,6 +26,7 @@ A function that plots the distribution of embedding ranks from a rank matrix
     according to a mapping.
 }
 \examples{
+\dontrun{
 # Generate distance matrix with default setings
 eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
 
@@ -33,6 +34,8 @@ eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
 eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
 
 # Visualize rank distribution by mapping
-visualizeRankDistribution(eColiRankMatrix, eColiParalogMapping)
+mapping <- eColiParalogMapping
+visualizeRankDistribution(eColiRankMatrix, mapping)
+}
 
 }

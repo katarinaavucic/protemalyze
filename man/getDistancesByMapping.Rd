@@ -25,10 +25,14 @@ A function that generates a data frame containing the distances for specified
     pairs using a mapping.
 }
 \examples{
+\dontrun{
 # Generate distance matrix with default setings
-eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+embeddingMatrix <- eColiEmbeddingMatrix
+eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
 
 # Retrieve distances by mapping
-eColiParalogDistances <- getDistancesByMapping(eColiDistMatrix,
-                                                eColiParalogMapping)
+mapping <- eColiParalogMapping
+eColiParalogDistances <- getDistancesByMapping(eColiDistMatrix, mapping)
+}
+
 }

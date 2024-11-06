@@ -14,14 +14,17 @@
 #'     each protein.
 #'
 #' @examples
+#' \dontrun{
 #' # Generate distance matrix with default setings
-#' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+#' embeddingMatrix <- eColiEmbeddingMatrix
+#' eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
 #'
 #' # Generate rank matrix from distance matrix
 #' eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
 #'
 #' # Generate closest pairs matrix
 #' eColiClosestPairsMatrix <- getClosestPairs(eColiRankMatrix)
+#' }
 #'
 #' @export
 getClosestPairs <- function(rankMatrix){
@@ -58,14 +61,17 @@ getClosestPairs <- function(rankMatrix){
 #'     for each protein.
 #'
 #' @examples
+#' \dontrun{
 #' # Generate distance matrix with default setings
-#' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+#' embeddingMatrix <- eColiEmbeddingMatrix
+#' eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
 #'
 #' # Generate rank matrix from distance matrix
 #' eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
 #'
 #' # Generate farthest pairs matrix
 #' eColiFarthestPairsMatrix <- getFarthestPairs(eColiRankMatrix)
+#' }
 #'
 #' @export
 getFarthestPairs <- function(rankMatrix){

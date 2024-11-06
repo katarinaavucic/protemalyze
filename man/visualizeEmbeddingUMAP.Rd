@@ -19,7 +19,10 @@ A function that creates an interactive plot of the UMAP created from an
     embedding matrix.
 }
 \examples{
+\dontrun{
 # Plot an interactive UMAP
-visualizeEmbeddingUMAP(eColiEmbeddingMatrix)
+embeddingMatrix <- eColiEmbeddingMatrix
+visualizeEmbeddingUMAP(embeddingMatrix)
+}
 
 }

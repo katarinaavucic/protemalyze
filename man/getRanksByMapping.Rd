@@ -26,13 +26,17 @@ A function that generates a data frame containing the ranks for specified
     pairs using a mapping.
 }
 \examples{
+\dontrun{
 # Generate distance matrix with default setings
-eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+embeddingMatrix <- eColiEmbeddingMatrix
+eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
 
 # Generate rank matrix from distance matrix
 eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
 
 # Retrieve ranks by mapping
-eColiParalogRanks <- getRanksByMapping(eColiRankMatrix, eColiParalogMapping)
+mapping <- eColiParalogMapping
+eColiParalogRanks <- getRanksByMapping(eColiRankMatrix, mapping)
+}
 
 }
