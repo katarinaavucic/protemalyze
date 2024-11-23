@@ -38,8 +38,8 @@ getClosestPairs <- function(rankMatrix){
   # Combine into 1 data frame, using the protein identifiers specified by the
   # closest pair indices.
   closestPairsMatrix <- data.frame(
-    Protein = rownames(asMatrix)[closestPairs[, 1]],
-    ClosestProtein = colnames(asMatrix)[closestPairs[, 2]]
+    Protein = rownames(asMatrix)[closestPairs[ , 1]],
+    ClosestProtein = colnames(asMatrix)[closestPairs[ , 2]]
   )
 
   return(closestPairsMatrix)
@@ -86,8 +86,8 @@ getFarthestPairs <- function(rankMatrix){
   # Combine into 1 data frame, using the protein identifiers specified by the
   # closest pair indices
   farthestPairsMatrix <- data.frame(
-    Protein = rownames(asMatrix)[farthestPairs[, 1]],
-    FarthestProtein = colnames(asMatrix)[farthestPairs[, 2]]
+    Protein = rownames(asMatrix)[farthestPairs[ , 1]],
+    FarthestProtein = colnames(asMatrix)[farthestPairs[ , 2]]
   )
 
   return(farthestPairsMatrix)
