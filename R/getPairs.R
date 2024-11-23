@@ -33,13 +33,13 @@ getClosestPairs <- function(rankMatrix){
   asMatrix <- as.matrix(rankMatrix)
 
   # The closest protein is at rank 1, since rank 0 is itself.
-  closestPairs <- which(rankMatrix == 1, arr.ind = TRUE)
+  closestPairs <- which(asMatrix == 1, arr.ind = TRUE)
 
   # Combine into 1 data frame, using the protein identifiers specified by the
   # closest pair indices.
   closestPairsMatrix <- data.frame(
-    Protein = rownames(rankMatrix)[closestPairs[, 1]],
-    ClosestProtein = colnames(rankMatrix)[closestPairs[, 2]]
+    Protein = rownames(asMatrix)[closestPairs[, 1]],
+    ClosestProtein = colnames(asMatrix)[closestPairs[, 2]]
   )
 
   return(closestPairsMatrix)
@@ -81,13 +81,13 @@ getFarthestPairs <- function(rankMatrix){
 
   # The farthest protein is at the number of rows minus one, since we subtract
   # one to zero out the diagonal.
-  farthestPairs <- which(rankMatrix == (nrow(rankMatrix) - 1), arr.ind = TRUE)
+  farthestPairs <- which(asMatrix == (nrow(asMatrix) - 1), arr.ind = TRUE)
 
   # Combine into 1 data frame, using the protein identifiers specified by the
   # closest pair indices
   farthestPairsMatrix <- data.frame(
-    Protein = rownames(rankMatrix)[farthestPairs[, 1]],
-    FarthestProtein = colnames(rankMatrix)[farthestPairs[, 2]]
+    Protein = rownames(asMatrix)[farthestPairs[, 1]],
+    FarthestProtein = colnames(asMatrix)[farthestPairs[, 2]]
   )
 
   return(farthestPairsMatrix)
