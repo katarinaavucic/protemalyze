@@ -23,6 +23,7 @@ knitr::opts_chunk$set(
 
 *protemalyze* is an R package designed to analyze protein embeddings derived from protein Language Models (pLMs). Protein embeddings are numerical representations of protein sequences, where each protein is mapped to a fixed-length vector in a high-dimensional space (Chandra et al., 2023). pLMs have been shown to capture essential information about protein sequences, and predictive models trained with protein embeddings often perform comparably to other encoding methods, despite having fewer dimensions (Yang et al., 2018). These embeddings are particularly useful for downstream tasks, such as identifying structurally or functionally similar proteins (Elnaggar et al., 2021). Despite their potential, these tools remain underutilized in the scientific community, primarily due to a knowledge barrier. protemalyze aims to lower this barrier, providing a more accessible entry point for researchers to explore data from pLMs without having to engage with the technical details of the underlying methods.
 
+The *protemalyze* package was developed using R version 4.4.1 (2024-06-14), Platform: aarch64-apple-darwin20 (64-bit) and Running under: macOS Sonoma 14.5.
 
 ## Installation
 

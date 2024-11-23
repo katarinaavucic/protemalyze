@@ -70,11 +70,11 @@ eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
 The rank matrix gives us a relative measure of closeness for each protein. We can retrieve the closest and farthest pair for each protein by running the following methods:
 
 ```{r}
-closestPairs <- getFarthestPairs(eColiDistMatrix)
-farthestPairs <- getFarthestPairs(eColiDistMatrix)
+closestPairs <- getClosestPairs(eColiRankMatrix)
+farthestPairs <- getFarthestPairs(eColiRankMatrix)
 ```
 
-Once we have the closest and farthest pairs, we can explore whether any of these relationships correlate with known biological information. For example, certain pairs of proteins could share functional similarities or be involved in the same biological pathway. Farthest pairs could have characteristics that set them apart, such as divergent evolutionary histories, possibly leading to functional differences. 
+Once we have the closest and farthest pairs, we can explore whether any of these relationships correlate with known biological information. For example, certain pairs of proteins could share functional similarities or be involved in the same biological pathway. 
 
 
 ## Analyzing Protein Sequence Similarities for Paralogous Proteins
@@ -125,7 +125,7 @@ We can perform a similar analysis by visualizing the rank distribution:
 visualizeRankDistribution(eColiRankMatrix, eColiParalogMapping)
 ```
 
-The median rank is 6, meaning half of the paralogs are within the top 6 closest proteins for their pair. This indicates that many paralogs retain some sequence similarity, but some have larger ranks. These pairs with larger ranks may be cases where the paralogs have evolved different functions. By focusing on pairs with higher ranks, we can identify proteins that might have undergone functional change.
+The median rank is 6, meaning half of the paralogs are within the top 6 closest proteins for their pair. This indicates that many paralogs retain some sequence similarity, but some have larger ranks. These pairs with larger ranks may be cases where the paralogs have evolved different functions. By focusing on pairs with higher ranks, we can identify proteins that might have undergone functional change. 
 
 ## Conclusion
 
@@ -135,3 +135,9 @@ In this vignette, we showed how **protemalyze** can be used to analyze, visualiz
 
 - [Koonin, E. V. (2005). Orthologs, Paralogs, and Evolutionary Genomics. Annual Review of Genetics, 39(1), 309–338.](https://doi.org/10.1146/annurev.genet.39.073003.114725)
 - [Altenhoff, A. M., Studer, R. A., Robinson-Rechavi, M., & Dessimoz, C. (2012). Resolving the Ortholog Conjecture: Orthologs Tend to Be Weakly, but Significantly, More Similar in Function than Paralogs. PLoS Computational Biology, 8(5), e1002514.](https://doi.org/10.1371/journal.pcbi.1002514)
+
+## Session Info
+
+```{r}
+sessionInfo()
+```

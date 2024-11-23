@@ -24,6 +24,10 @@ more accessible entry point for researchers to explore data from pLMs
 without having to engage with the technical details of the underlying
 methods.
 
+The *protemalyze* package was developed using R version 4.4.1
+(2024-06-14), Platform: aarch64-apple-darwin20 (64-bit) and Running
+under: macOS Sonoma 14.5.
+
 ## Installation
 
 You can install the development version of protemalyze like so:
