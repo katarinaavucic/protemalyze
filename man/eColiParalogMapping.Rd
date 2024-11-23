@@ -3,7 +3,7 @@
 \docType{data}
 \name{eColiParalogMapping}
 \alias{eColiParalogMapping}
-\title{Paralog Mapping for Escherichia coli}
+\title{Paralog Mapping for \emph{Escherichia coli}}
 \format{
 A data frame with 7,550 rows and 2 total columns. Columns Protein 1
     and Protein 2 are UniProt identifiers, and each row represents one
@@ -11,23 +11,34 @@ A data frame with 7,550 rows and 2 total columns. Columns Protein 1
 }
 \source{
 Orthologous Matrix (OMA) Browser
-
-https://omabrowser.org/oma/genomePW/
 }
 \usage{
 eColiParalogMapping
 }
 \description{
-A one-to-many paralog mapping for Escherichia coli generated from the
-Orthologous Matrix (OMA) Browser using the Genome Pair View tool with both
-species as `Escherichia coli str. K-12 substr. MG1655 (ECOLI)`. Identifiers
-were converted to UniProt using the Identifier Mapping file for download on
-the OMA Browser. Processing was done to remove rows where either protein was
-not present in the eColiEmbeddingMatrix to reduce the size of the file.
+A one-to-many paralog mapping for \emph{Escherichia coli} generated from the
+Orthologous Matrix (OMA) Browser.
+}
+\details{
+Paralog mapping was retrieved using the
+\href{https://omabrowser.org/oma/genomePW/}{Genome Pair View} tool with both
+species as \strong{Escherichia coli str. K-12 substr. MG1655 (ECOLI)}.
+Identifiers were converted to UniProt using the Identifier Mapping file for
+download on the OMA Browser. Processing was done to remove rows where either
+protein was not present in the eColiEmbeddingMatrix to reduce the size of the
+file.
 }
 \examples{
 \dontrun{
  eColiParalogMapping
 }
+}
+\references{
+Altenhoff, A. M., Glover, N. M., Train, C. M., Kaleb, K., Warwick Vesztrocy,
+A., Dylus, D., de Farias, T. M., Zile, K., Stevenson, C., Long, J., Redestig,
+H., Gonnet, G. H., & Dessimoz, C. (2018). The OMA orthology database in 2018:
+retrieving evolutionary relationships among all domains of life through
+richer web and programmatic interfaces. Nucleic Acids Research, 46(D1),
+D477-D485. \href{https://pubmed.ncbi.nlm.nih.gov/29106550/}{Link}.
 }
 \keyword{datasets}
