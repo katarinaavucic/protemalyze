@@ -29,7 +29,22 @@ processData <- function(embeddingMatrix){
   return(processedMatrix)
 }
 
-# Remove duplicates from an embedding matrix data frame if there is an index.
+#' Remove Duplicates From An Embedding Matrix
+#'
+#' A function that removes duplicate values from a data frame
+#' representing an embedding matrix if there are row names and column names
+#' present.
+#'
+#' @param embeddingMatrix A data frame containing an embedding matrix with
+#'     identifiers in the index and columns representing embedding dimensions.
+#'
+#' @return Returns a data frame representing the embedding matrix with no
+#'     duplicate values. Protein identifiers are in the rows and embedding
+#'     dimensions in the columns.
+#'
+#' @noRd
+#' @import dplyr
+#' @import tibble
 removeDuplicates <- function(embeddingMatrix) {
 
   # If the matrix has rownames, remove duplicates.
