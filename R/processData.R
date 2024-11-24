@@ -21,28 +21,9 @@
 #' @import tibble
 processData <- function(embeddingMatrix){
 
-  # Error if the input is not a data frame.
-  if (!is.data.frame(embeddingMatrix)) {
-    stop("Error: The input 'embeddingMatrix' must be a data frame.")
-  }
-  # Error if the data frame is empty.
-  else if (nrow(embeddingMatrix) == 0 || ncol(embeddingMatrix) == 0) {
-    stop("Error: The input 'embeddingMatrix' is empty. It must have at least one
-         row and one column.")
-  }
-  # Error if the row names do not exist.
-  else if (is.null(rownames(embeddingMatrix)) || all(rownames(embeddingMatrix)
-                                                     == "")) {
-    stop("Error: The input 'embeddingMatrix' must have row names that are not
-         empty.")
-  }
-  # Error if any value in the data frame is not numeric.
-  else if (any(!sapply(embeddingMatrix, is.numeric))) {
-    stop("Error: All values in 'embeddingMatrix' must be numeric.")
-  }
-  else {
-    # Execute function code.
-  }
+  # Error checking for embeddingMatrix. Only general checks are read, since the
+  # embedding matrix has not been cleaned yet.
+  checkMatrix(embeddingMatrix)
 
   # Remove duplicate rownames and NULLs.
   processedMatrix <- embeddingMatrix %>%

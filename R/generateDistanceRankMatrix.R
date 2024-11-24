@@ -50,27 +50,12 @@ validMetrics <- c("bhjattacharyya", "bray", "canberra", "chord",
 #' @import parallelDist
 generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
                                    threads=NULL){
-  # Error if the input is not a data frame.
-  if (!is.data.frame(embeddingMatrix)) {
-    stop("Error: The input 'embeddingMatrix' must be a data frame.")
-  }
-  # Error if the data frame is empty.
-  else if (nrow(embeddingMatrix) == 0 || ncol(embeddingMatrix) == 0) {
-    stop("Error: The input 'embeddingMatrix' is empty. It must have at least one
-         row and one column.")
-  }
-  # Error if the row names do not exist.
-  else if (is.null(rownames(embeddingMatrix)) || all(rownames(embeddingMatrix)
-                                                     == "")) {
-    stop("Error: The input 'embeddingMatrix' must have row names that are not
-         empty.")
-  }
-  # Error if any value in the data frame is not numeric.
-  else if (any(!sapply(embeddingMatrix, is.numeric))) {
-    stop("Error: All values in 'embeddingMatrix' must be numeric.")
-  }
+
+  # Error checking for embeddingMatrix.
+  checkMatrix(embeddingMatrix, type="embeddingMatrix")
+
   # Error if metric is invalid.
-  else if (metric != "euclidean" && !(metric %in% validMetrics)) {
+  if (metric != "euclidean" && !(metric %in% validMetrics)) {
     stop(paste("Invalid metric:", metric, ". Valid options are:",
                paste(validMetrics, collapse = ", ")))
   }
@@ -118,30 +103,17 @@ generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
 #' @importFrom matrixStats rowRanks
 generateRankMatrix <- function(distanceMatrix){
 
-  # Error if the input is not a data frame.
-  if (!is.data.frame(distanceMatrix)) {
-    stop("Error: The input 'distanceMatrix' must be a data frame.")
-  }
-  # Error if the data frame is empty.
-  else if (nrow(distanceMatrix) == 0 || ncol(distanceMatrix) == 0) {
-    stop("Error: The input 'distanceMatrix' is empty. It must have at least one
-         row and one column.")
-  }
-  # Error if the row names do not exist.
-  else if (is.null(rownames(distanceMatrix)) || all(rownames(distanceMatrix)
-                                                     == "")) {
-    stop("Error: The input 'distanceMatrix' must have row names that are not
-         empty.")
-  }
+  # Error checking for distMatrix (these checks are general and apply here as well)
+  checkMatrix(distanceMatrix, type="distanceMatrix")
+
   # Error if the column names do not exist.
-  else if (is.null(colnames(distanceMatrix)) || all(colnames(distanceMatrix)
+  if (is.null(colnames(distanceMatrix)) || all(colnames(distanceMatrix)
                                                     == "")) {
     stop("Error: The input 'distanceMatrix' must have column names that are not
          empty.")
   }
-  # Error if any value in the data frame is not numeric.
-  else if (any(!sapply(distanceMatrix, is.numeric))) {
-    stop("Error: All values in 'distanceMatrix' must be numeric.")
+  else {
+    # Execute function code.
   }
 
   # Convert to matrix, perform optimized ranking computation, convert back to
