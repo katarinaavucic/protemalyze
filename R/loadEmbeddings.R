@@ -27,6 +27,11 @@
 #' @import dplyr
 loadEmbeddings <- function(path, fileType){
 
+  # Error if the provided path is valid.
+  if (!file.exists(path)) {
+    stop("Error: file does not exist: ", path)
+  }
+
   # Read from csv.
   if (fileType == 'csv') {
     matrix <- readr::read_csv(path)
@@ -45,10 +50,12 @@ loadEmbeddings <- function(path, fileType){
       as.data.frame()
     colnames(matrix) <- paste0("V", seq_len(ncol(matrix)))
   }
-  # Otherwise, send an error.
+  # Error if fileType is not one of the options.
   else {
-    stop("Invalid file type: Valid options are: csv, tsv, and h5.")
+    stop("Error: The input 'fileType' specifies an invalid file type. Valid
+         options are: csv, tsv, and h5.")
   }
+
   return(matrix)
 }
 

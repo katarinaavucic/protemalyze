@@ -50,19 +50,37 @@ validMetrics <- c("bhjattacharyya", "bray", "canberra", "chord",
 #' @import parallelDist
 generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
                                    threads=NULL){
-
-  # If metric is invalid, return an error
-  if (metric != "euclidean" && !(metric %in% validMetrics)) {
+  # Error if the input is not a data frame.
+  if (!is.data.frame(embeddingMatrix)) {
+    stop("Error: The input 'embeddingMatrix' must be a data frame.")
+  }
+  # Error if the data frame is empty.
+  else if (nrow(embeddingMatrix) == 0 || ncol(embeddingMatrix) == 0) {
+    stop("Error: The input 'embeddingMatrix' is empty. It must have at least one
+         row and one column.")
+  }
+  # Error if the row names do not exist.
+  else if (is.null(rownames(embeddingMatrix)) || all(rownames(embeddingMatrix)
+                                                     == "")) {
+    stop("Error: The input 'embeddingMatrix' must have row names that are not
+         empty.")
+  }
+  # Error if any value in the data frame is not numeric.
+  else if (any(!sapply(embeddingMatrix, is.numeric))) {
+    stop("Error: All values in 'embeddingMatrix' must be numeric.")
+  }
+  # Error if metric is invalid.
+  else if (metric != "euclidean" && !(metric %in% validMetrics)) {
     stop(paste("Invalid metric:", metric, ". Valid options are:",
                paste(validMetrics, collapse = ", ")))
   }
-  # Otherwise, do nothing.
   else {
-    # Do nothing.
+    # Execute function code.
   }
 
   # Convert to matrix, perform optimized distance computation, convert back to
-  # data frame for user.
+  # data frame for user. When parDist receives threads=NULL (default), it sets
+  # the threads to the maximum amount of cpu threads on the system.
   asMatrix <- as.matrix(embeddingMatrix)
   distMatrix <- as.matrix(parallelDist::parDist(asMatrix, method=metric,
                                                 threads=threads))
@@ -100,6 +118,32 @@ generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
 #' @importFrom matrixStats rowRanks
 generateRankMatrix <- function(distanceMatrix){
 
+  # Error if the input is not a data frame.
+  if (!is.data.frame(distanceMatrix)) {
+    stop("Error: The input 'distanceMatrix' must be a data frame.")
+  }
+  # Error if the data frame is empty.
+  else if (nrow(distanceMatrix) == 0 || ncol(distanceMatrix) == 0) {
+    stop("Error: The input 'distanceMatrix' is empty. It must have at least one
+         row and one column.")
+  }
+  # Error if the row names do not exist.
+  else if (is.null(rownames(distanceMatrix)) || all(rownames(distanceMatrix)
+                                                     == "")) {
+    stop("Error: The input 'distanceMatrix' must have row names that are not
+         empty.")
+  }
+  # Error if the column names do not exist.
+  else if (is.null(colnames(distanceMatrix)) || all(colnames(distanceMatrix)
+                                                    == "")) {
+    stop("Error: The input 'distanceMatrix' must have column names that are not
+         empty.")
+  }
+  # Error if any value in the data frame is not numeric.
+  else if (any(!sapply(distanceMatrix, is.numeric))) {
+    stop("Error: All values in 'distanceMatrix' must be numeric.")
+  }
+
   # Convert to matrix, perform optimized ranking computation, convert back to
   # data frame for user.
   asMatrix <- as.matrix(distanceMatrix)
@@ -107,9 +151,9 @@ generateRankMatrix <- function(distanceMatrix){
 
   # Subtract 1 so that the diagonal is rank 0 and closest (not the same) protein
   # has a rank of 1.
-  rankDF <- as.data.frame(rankMatrix - 1)
+  rankMatrix <- as.data.frame(rankMatrix - 1)
 
-  return(rankDF)
+  return(rankMatrix)
 }
 
 # [END]
