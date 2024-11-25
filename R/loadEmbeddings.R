@@ -35,10 +35,18 @@ loadEmbeddings <- function(path, fileType){
   # Read from csv.
   if (fileType == 'csv') {
     matrix <- readr::read_csv(path)
+    # Set rownames to the first column.
+    matrix <- as.data.frame(matrix)
+    rownames(matrix) <- matrix[[1]]
+    matrix <- matrix[, -1]
   }
   # Read from tsv.
   else if (fileType == 'tsv') {
     matrix <- readr::read_tsv(path)
+    # Set rownames to the first column.
+    matrix <- as.data.frame(matrix)
+    rownames(matrix) <- matrix[[1]]
+    matrix <- matrix[, -1]
   }
   # Read from h5 file.
   else if (fileType == "h5") {
