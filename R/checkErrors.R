@@ -80,11 +80,6 @@ checkMatrix <- function(matrix, type=NULL) {
          empty.")
   }
 
-  # Error if any value in the data frame is not numeric.
-  if (any(!sapply(matrix, is.numeric))) {
-    stop("Error: All values in matrix must be numeric.")
-  }
-
 
   # Specific checks based on matrix type.
   # If no type, only general checks are applied.
@@ -96,6 +91,10 @@ checkMatrix <- function(matrix, type=NULL) {
     if (any(is.na(matrix))) {
       stop("Error: The 'distanceMatrix' contains NA values. Please use
            processData before creating the distance matrix.")
+    }
+    # Error if any value in the data frame is not numeric.
+    if (any(!sapply(matrix, is.numeric))) {
+      stop("Error: All values in matrix must be numeric.")
     }
   }
   else if (type == "distanceMatrix") {
@@ -117,6 +116,10 @@ checkMatrix <- function(matrix, type=NULL) {
     if (any(is.na(matrix))) {
       stop("Error: The 'distanceMatrix' contains NA values. Please use
            processData before creating the distance matrix.")
+    }
+    # Error if any value in the data frame is not numeric.
+    if (any(!sapply(matrix, is.numeric))) {
+      stop("Error: All values in matrix must be numeric.")
     }
   }
   else if (type == "rankMatrix") {
@@ -143,6 +146,10 @@ checkMatrix <- function(matrix, type=NULL) {
     if (any(matrix < 0 | matrix != floor(matrix))) {
       stop("Error: For a 'rankMatrix', all values must be non-negative
            integers.")
+    }
+    # Error if any value in the data frame is not numeric.
+    if (any(!sapply(matrix, is.numeric))) {
+      stop("Error: All values in matrix must be numeric.")
     }
   }
   else {
