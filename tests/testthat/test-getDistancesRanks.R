@@ -41,3 +41,34 @@ test_that("getRanksByMapping generates a data frame with correct format", {
               columns")
 })
 
+# Test getDistancesByMapping function
+test_that("getDistancesByMapping handles invalid distanceMatrix correctly", {
+
+  distMatrix <- generateDistanceMatrix(SARSCoV2EmbeddingMatrix)
+  mapping <- SARSCoV2Mapping
+
+  # Add NULL (NA) values to 10 rows
+  indices <- sample(nrow(distMatrix), 10)
+  distMatrix[indices, ] <- NA
+
+  # Check invalid metric response is correct
+  expect_error(getDistancesByMapping(distMatrix, mapping),
+               info = "This should throw an error for NAs in embeddingMatrix")
+})
+
+
+# Test generateRankMatrix function
+test_that("generateRankMatrix handles invalid embeddingMatrix correctly", {
+
+  distMatrix <- generateDistanceMatrix(SARSCoV2EmbeddingMatrix)
+  rankMatrix <- generateRankMatrix(distMatrix)
+  mapping <- SARSCoV2Mapping
+
+  # Add NULL (NA) values to 10 rows
+  indices <- sample(nrow(rankMatrix), 10)
+  rankMatrix[indices, ] <- -10
+
+  # Check invalid metric response is correct
+  expect_error(generateRankMatrix(rankMatrix, mapping),
+               info = "This should throw an error for negatives in rankMatrix")
+})

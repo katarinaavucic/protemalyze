@@ -89,7 +89,7 @@ checkMatrix <- function(matrix, type=NULL) {
   else if (type == "embeddingMatrix") {
     # Error if there are NA values in the embedding matrix.
     if (any(is.na(matrix))) {
-      stop("Error: The 'distanceMatrix' contains NA values. Please use
+      stop("Error: The 'embeddingMatrix' contains NA values. Please use
            processData before creating the distance matrix.")
     }
     # Error if any value in the data frame is not numeric.
