@@ -8,6 +8,8 @@
 # https://shiny.posit.co/r/articles/build/datatables/
 # downlaod
 # https://shiny.posit.co/r/reference/shiny/0.11/downloadhandler.html
+# retrieving file type source
+# https://mastering-shiny.org/action-transfer.html
 
 library(shiny)
 library(plotly)
@@ -38,11 +40,26 @@ ui <- fluidPage(
       fileInput("mappingFile", "Optional: Input Mapping File",
                 accept = c(".csv", ".tsv")),
 
-      # Action button to run the analysis.
-      actionButton(inputId = "runButton", label = "Run Analysis")
-
       # TODO: add inputs for specifying distance metrics, threads, etc.
 
+      # Checkbox for showing additional parameters.
+      checkboxInput("showDistanceParams",
+                    "Show Parameters For Distance Matrix Calculations",
+                    value = FALSE),
+
+      # Conditional panel for additional distance matrix parameters.
+      conditionalPanel(
+        condition = "input.showDistanceParams == true",
+        # Input for distance metric.
+        textInput("distMetric", "Distance Metric", value = "euclidean"),
+        # Input for number of threads.
+        numericInput("numThreads", "Number of Threads", value = NULL),
+        p("It is reccomended that you keep the number of threads as the default,
+          which automatically uses all available threads.")
+      ),
+
+      # Action button to run the analysis.
+      actionButton(inputId = "runButton", label = "Run Analysis")
     ),
 
     # Main panel for displaying outputs ----
@@ -56,17 +73,8 @@ ui <- fluidPage(
                     h3("Closest and Farthest Pairs Table"),
                     downloadLink('downloadPairs', 'Download Table'),
                     DTOutput("pairsTable"))),
-                  tabPanel("Mapping Ranks & Distances", fluidRow(
-                    column(12,
-                           h3("Distance and Rank Table"),
-                           downloadLink('downloadMapping', 'Download Table')),
-                    column(6,
-                           DTOutput("mappingTable")),
-                    column(6,
-                           h4("Distance Distribution"),
-                           plotOutput("distPlot", height = "300px"),
-                           h4("Rank Distribution"),
-                           plotOutput("rankPlot", height = "300px"))))
+                  tabPanel("Mapping Ranks & Distances",
+                           uiOutput("mappingTabContent"))
       )
     )
   )
@@ -78,7 +86,6 @@ server <- function(input, output) {
   # Reactive expression to load and process embedding matrix when file is uploaded.
   embeddingMatrix <- reactive({
     req(input$embeddingFile)
-    # source: https://mastering-shiny.org/action-transfer.html
     fileType <- tools::file_ext(input$embeddingFile$name)
     embeddingMatrix <- loadEmbeddings(input$embeddingFile$datapath, fileType)
     embeddingMatrix <- processData(embeddingMatrix)
@@ -95,88 +102,127 @@ server <- function(input, output) {
   # Run analysis when action button is clicked.
   observeEvent(input$runButton, {
 
-    # Must do this to use the result of the reactive expression.
-    embeddingMatrixData <- embeddingMatrix()
+      # Must do this to use the result of the reactive expression.
+      embeddingMatrixData <- embeddingMatrix()
 
-    # Render UMAP plot using the processed embedding matrix.
-    # This takes the longest but is on the first page so we will perform this
-    # as early as possible.
-    output$umapPlot <- renderPlotly({
-      visualizeEmbeddingUMAP(embeddingMatrixData)
-    })
+      # Render UMAP plot using the processed embedding matrix.
+      # This takes the longest but is on the first page so we will perform this
+      # as early as possible.
+      output$umapPlot <- renderPlotly({
+        return(visualizeEmbeddingUMAP(embeddingMatrixData))
+      })
 
-    # Generate necessary tables for general analysis.
-    distMatrix <- generateDistanceMatrix(embeddingMatrixData)
-    rankMatrix <- generateRankMatrix(distMatrix)
-    closestPairs <- getClosestPairs(rankMatrix)
-    farthestPairs <- getFarthestPairs(rankMatrix)
-
-    # Merge closestPairs and farthestPairs on Protein.
-    combinedPairsTable <- dplyr::left_join(closestPairs, farthestPairs,
-                                           by = "Protein")
-
-    # Return button to download the table.
-    output$downloadPairs <- downloadHandler(
-      filename = function() {
-        paste('closest_and_farthest_pairs_', Sys.Date(), '.csv', sep='')
-      },
-      content = function(file) {
-        write.csv(combinedPairsTable, file)
+      # Check if numThreads is a valid option
+      if (is.integer(input$numThreads)) {
+        threads <- input$numThreads
+      } else {
+        threads <- NULL
       }
-    )
 
-    # Render the closest and farthest pairs table.
-    output$pairsTable <- renderDT({
-      return(datatable(combinedPairsTable,
-                       options = list(pageLength = 10,
-                                      lengthMenu = c(10, 20, 50, 100))))
-    })
+      # Generate necessary tables for general analysis.
+      distMatrix <- generateDistanceMatrix(embeddingMatrixData,
+                                           metric=input$distMetric,
+                                           threads=threads)
+      rankMatrix <- generateRankMatrix(distMatrix)
+      closestPairs <- getClosestPairs(rankMatrix)
+      farthestPairs <- getFarthestPairs(rankMatrix)
 
-    # Check if a mapping has been uploaded.
-    mapping <- paralogMapping()
-
-    # If no mapping, send message to user.
-    if (is.null(mapping)) {
-      return(h3("Upload a mapping to view mapping-specific analysis."))
-    # If mapping, perform analysis.
-    } else {
-      # Generate necessary tables and plots for mapping analysis.
-      mappingDistances <- getDistancesByMapping(distMatrix, mapping)
-      mappingRanks <- getRanksByMapping(rankMatrix, mapping)
-      distPlot <- visualizeDistanceDistribution(distMatrix, mapping)
-      rankPlot <- visualizeRankDistribution(rankMatrix, mapping)
-
-      # Merge mappingDistances and mappingRanks on Protein1 and Protein2
-      combinedMappingTable <- dplyr::left_join(mappingDistances, mappingRanks,
-                                               by = c("Protein1", "Protein2"))
+      # Merge closestPairs and farthestPairs on Protein.
+      combinedPairsTable <- dplyr::left_join(closestPairs, farthestPairs,
+                                             by = "Protein")
 
       # Return button to download the table.
-      output$downloadMapping <- downloadHandler(
+      output$downloadPairs <- downloadHandler(
         filename = function() {
-          paste('mapping_distances_and_ranks_', Sys.Date(), '.csv', sep='')
+          paste('closest_and_farthest_pairs_', Sys.Date(), '.csv', sep='')
         },
         content = function(file) {
-          write.csv(combinedMappingTable, file)
+          write.csv(combinedPairsTable, file)
         }
       )
 
-      # Render the distance and rank table for the mapping.
-      output$mappingTable <- renderDT({
-        return(datatable(combinedMappingTable,
+      # Render the closest and farthest pairs table.
+      output$pairsTable <- renderDT({
+        return(datatable(combinedPairsTable,
                          options = list(pageLength = 10,
                                         lengthMenu = c(10, 20, 50, 100))))
       })
 
-      # Render distance distribution plot.
-      output$distPlot <- renderPlot({
-        return(visualizeDistanceDistribution(distMatrix, mapping))
-      })
+      # Check if a mapping has been uploaded.
+      mapping <- paralogMapping()
 
-      # Render rank distribution plot.
-      output$rankPlot <- renderPlot({
-        return(visualizeRankDistribution(rankMatrix, mapping))
-      })
-    }
+      # If no mapping, send message to user.
+      if (is.null(mapping)) {
+        return(h3("Upload a mapping to view mapping-specific analysis."))
+      # If mapping, perform analysis.
+      } else {
+        # Generate necessary tables and plots for mapping analysis.
+        mappingDistances <- getDistancesByMapping(distMatrix, mapping)
+        mappingRanks <- getRanksByMapping(rankMatrix, mapping)
+        distPlot <- visualizeDistanceDistribution(distMatrix, mapping)
+        rankPlot <- visualizeRankDistribution(rankMatrix, mapping)
+
+        # Merge mappingDistances and mappingRanks on Protein1 and Protein2
+        combinedMappingTable <- dplyr::left_join(mappingDistances, mappingRanks,
+                                                 by = c("Protein1", "Protein2"))
+
+        # Return button to download the table.
+        output$downloadMapping <- downloadHandler(
+          filename = function() {
+            paste('mapping_distances_and_ranks_', Sys.Date(), '.csv', sep='')
+          },
+          content = function(file) {
+            write.csv(combinedMappingTable, file)
+          }
+        )
+
+        # Render the distance and rank table for the mapping.
+        output$mappingTable <- renderDT({
+          return(datatable(combinedMappingTable,
+                           options = list(pageLength = 10,
+                                          lengthMenu = c(10, 20, 50, 100))))
+        })
+
+        # Render distance distribution plot.
+        output$distPlot <- renderPlot({
+          return(visualizeDistanceDistribution(distMatrix, mapping))
+        })
+
+        # Render rank distribution plot.
+        output$rankPlot <- renderPlot({
+          return(visualizeRankDistribution(rankMatrix, mapping))
+        })
+
+        # Reactive value to check if mapping file is uploaded
+        mappingUploaded <- reactive({
+          !is.null(input$mappingFile)
+        })
+
+        # Render the content of the Mapping tab conditionally
+        output$mappingTabContent <- renderUI({
+          if (mappingUploaded()) {
+            fluidRow(
+              column(12,
+                     h3("Distance and Rank Table"),
+                     downloadLink('downloadMapping', 'Download Table')
+              ),
+              column(6,
+                     DTOutput("mappingTable")
+              ),
+              column(6,
+                     h4("Distance Distribution"),
+                     plotOutput("distPlot", height = "300px"),
+                     h4("Rank Distribution"),
+                     plotOutput("rankPlot", height = "300px")
+              )
+            )
+          } else {
+            p("No mapping file uploaded.
+              Please upload a mapping file to see the analysis.")
+          }
+
+        })
+      }
   })
 }
 
