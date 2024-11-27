@@ -27,12 +27,11 @@ A function that computes a rank matrix from a distance matrix derived from
 an embedding matrix that has been generated from a protein Language Model.
 }
 \examples{
-\dontrun{
 # Generate distance matrix with default setings
-embeddingMatrix <- eColiEmbeddingMatrix
-eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
+embeddingMatrix <- SARSCoV2EmbeddingMatrix
+distMatrix <- generateDistanceMatrix(embeddingMatrix)
 
 # Generate rank matrix from distance matrix
-eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
-}
+rankMatrix <- generateRankMatrix(distMatrix)
+
 }

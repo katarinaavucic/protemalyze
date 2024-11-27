@@ -12,11 +12,9 @@
 #'     embedding matrix.
 #'
 #' @examples
-#' \dontrun{
 #' # Plot an interactive UMAP
-#' embeddingMatrix <- eColiEmbeddingMatrix
+#' embeddingMatrix <- SARSCoV2EmbeddingMatrix
 #' visualizeEmbeddingUMAP(embeddingMatrix)
-#' }
 #'
 #' @import dplyr
 #' @import umap
@@ -68,14 +66,12 @@ visualizeEmbeddingUMAP <- function(embeddingMatrix){
 #'     mapping.
 #'
 #' @examples
-#' \dontrun{
 #' # Generate distance matrix with default setings
-#' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+#' distMatrix <- generateDistanceMatrix(SARSCoV2EmbeddingMatrix)
 #'
 #' # Visualize distance distribution by mapping
-#' mapping <- eColiParalogMapping
-#' visualizeDistanceDistribution(eColiDistMatrix, mapping)
-#' }
+#' mapping <- SARSCoV2Mapping
+#' visualizeDistanceDistribution(distMatrix, mapping)
 #'
 #' @import ggplot2
 #' @importFrom stats median
@@ -145,17 +141,15 @@ visualizeDistanceDistribution <- function(distanceMatrix, mapping){
 #'     mapping.
 #'
 #' @examples
-#' \dontrun{
 #' # Generate distance matrix with default setings
-#' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+#' distMatrix <- generateDistanceMatrix(SARSCoV2EmbeddingMatrix)
 #'
 #' # Generate rank matrix from distance matrix
-#' eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
+#' rankMatrix <- generateRankMatrix(distMatrix)
 #'
 #' # Visualize rank distribution by mapping
-#' mapping <- eColiParalogMapping
-#' visualizeRankDistribution(eColiRankMatrix, mapping)
-#' }
+#' mapping <- SARSCoV2Mapping
+#' visualizeRankDistribution(rankMatrix, mapping)
 #'
 #' @import ggplot2
 #' @importFrom stats median

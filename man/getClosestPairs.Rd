@@ -8,7 +8,9 @@ getClosestPairs(rankMatrix)
 }
 \arguments{
 \item{rankMatrix}{A data frame representing the rank matrix calculated from
-an embedding matrix. Each value in the rank matrix is the rank of the
+a distance matrix. The distance matrix is a data frame computed from
+an embedding matrix that has been generated from a protein Language
+Model. Each value in the rank matrix is the rank of the
 distance of the column protein compared to all other distances computed
 with the row protein. These are not reciprocal values, and the diagonal
 (where the row and column protein are the same) is always rank 0. The
@@ -20,19 +22,18 @@ Returns a data frame containing the protein with the closest rank for
 }
 \description{
 A function that generates a data frame containing the closest pairs for each
-    protein in a ranked matrix.
+    protein in a rank matrix that has been derived from embeddings from
+    a protein Language Model.
 }
 \examples{
-\dontrun{
 # Generate distance matrix with default setings
-embeddingMatrix <- eColiEmbeddingMatrix
-eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
+embeddingMatrix <- SARSCoV2EmbeddingMatrix
+distMatrix <- generateDistanceMatrix(embeddingMatrix)
 
 # Generate rank matrix from distance matrix
-eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
+rankMatrix <- generateRankMatrix(distMatrix)
 
 # Generate closest pairs matrix
-eColiClosestPairsMatrix <- getClosestPairs(eColiRankMatrix)
-}
+closestPairsMatrix <- getClosestPairs(rankMatrix)
 
 }

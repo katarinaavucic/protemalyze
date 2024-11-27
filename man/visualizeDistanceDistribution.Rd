@@ -8,10 +8,11 @@ visualizeDistanceDistribution(distanceMatrix, mapping)
 }
 \arguments{
 \item{distanceMatrix}{A data frame representing the distance matrix from
-an embedding matrix. Each value in the distance matrix is the distance
-calculated between the row and column embeddings. The distance matrix
-should contain protein identifies in the row and columns indices, with
-the diagonal all zeroes.}
+an embedding matrix that has been generated from a protein Language
+Model. Each value in the distance matrix is the distance calculated
+between the row and column embeddings. The distance matrix should contain
+protein identifies in the row and columns indices, with the diagonal all
+zeroes.}
 
 \item{mapping}{A data frame with two columns of protein identifiers matching
 the identifiers used for the embedding matrix.}
@@ -25,13 +26,11 @@ A function that plots the distribution of embedding distances from a distance
     matrix according to a mapping.
 }
 \examples{
-\dontrun{
 # Generate distance matrix with default setings
-eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+distMatrix <- generateDistanceMatrix(SARSCoV2EmbeddingMatrix)
 
 # Visualize distance distribution by mapping
-mapping <- eColiParalogMapping
-visualizeDistanceDistribution(eColiDistMatrix, mapping)
-}
+mapping <- SARSCoV2Mapping
+visualizeDistanceDistribution(distMatrix, mapping)
 
 }

@@ -8,7 +8,9 @@ getRanksByMapping(rankMatrix, mapping)
 }
 \arguments{
 \item{rankMatrix}{A data frame representing the rank matrix calculated from
-an embedding matrix. Each value in the rank matrix is the rank of the
+a distance matrix. The distance matrix is a data frame computed from
+an embedding matrix that has been generated from a protein Language
+Model. Each value in the rank matrix is the rank of the
 distance of the column protein compared to all other distances computed
 with the row protein. These are not reciprocal values, and the diagonal
 (where the row and column protein are the same) is always rank 0. The
@@ -22,21 +24,19 @@ Returns a data frame containing the proteins in the matching and
     their associated rank from the rank matrix.
 }
 \description{
-A function that generates a data frame containing the ranks for specified
-    pairs using a mapping.
+A function that generates a data frame containing the ranks from a rank
+    matrix between pairs from a user-specified mapping.
 }
 \examples{
-\dontrun{
 # Generate distance matrix with default setings
-embeddingMatrix <- eColiEmbeddingMatrix
-eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
+embeddingMatrix <- SARSCoV2EmbeddingMatrix
+distMatrix <- generateDistanceMatrix(embeddingMatrix)
 
 # Generate rank matrix from distance matrix
-eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
+rankMatrix <- generateRankMatrix(distMatrix)
 
 # Retrieve ranks by mapping
-mapping <- eColiParalogMapping
-eColiParalogRanks <- getRanksByMapping(eColiRankMatrix, mapping)
-}
+mapping <- SARSCoV2Mapping
+ranks <- getRanksByMapping(rankMatrix, mapping)
 
 }

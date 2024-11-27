@@ -33,17 +33,15 @@ user's choice of distance metric and an embedding matrix derived from a
 protein Language Model.
 }
 \examples{
-\dontrun{
 # Generate distance matrix with default setings
-embeddingMatrix <- eColiEmbeddingMatrix
-eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
+embeddingMatrix <- SARSCoV2EmbeddingMatrix
+distMatrix <- generateDistanceMatrix(embeddingMatrix)
 
 # Generate distance matrix with an alternative metric
-eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix,
+distMatrix <- generateDistanceMatrix(embeddingMatrix,
                                           metric="fJaccard")
 # Generate distance matrix with a set amount of threads
-eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix,
+distMatrix <- generateDistanceMatrix(embeddingMatrix,
                                            threads=4)
-}
 
 }

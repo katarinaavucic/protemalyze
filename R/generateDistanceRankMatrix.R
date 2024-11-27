@@ -37,18 +37,16 @@ validMetrics <- c("bhjattacharyya", "bray", "canberra", "chord",
 #'     and columns indices, and the diagonal is all zeroes.
 #'
 #' @examples
-#' \dontrun{
 #' # Generate distance matrix with default setings
-#' embeddingMatrix <- eColiEmbeddingMatrix
-#' eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
+#' embeddingMatrix <- SARSCoV2EmbeddingMatrix
+#' distMatrix <- generateDistanceMatrix(embeddingMatrix)
 #'
 #' # Generate distance matrix with an alternative metric
-#' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix,
+#' distMatrix <- generateDistanceMatrix(embeddingMatrix,
 #'                                           metric="fJaccard")
 #' # Generate distance matrix with a set amount of threads
-#' eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix,
+#' distMatrix <- generateDistanceMatrix(embeddingMatrix,
 #'                                            threads=4)
-#' }
 #'
 #' @export
 #' @import parallelDist
@@ -97,14 +95,13 @@ generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
 #'     rank matrix contains protein identifies in the row and columns indices.
 #'
 #' @examples
-#' \dontrun{
 #' # Generate distance matrix with default setings
-#' embeddingMatrix <- eColiEmbeddingMatrix
-#' eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
+#' embeddingMatrix <- SARSCoV2EmbeddingMatrix
+#' distMatrix <- generateDistanceMatrix(embeddingMatrix)
 #'
 #' # Generate rank matrix from distance matrix
-#' eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
-#' }
+#' rankMatrix <- generateRankMatrix(distMatrix)
+#'
 #' @export
 #' @importFrom matrixStats rowRanks
 generateRankMatrix <- function(distanceMatrix){

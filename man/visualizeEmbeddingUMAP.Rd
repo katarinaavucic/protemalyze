@@ -8,7 +8,9 @@ visualizeEmbeddingUMAP(embeddingMatrix)
 }
 \arguments{
 \item{embeddingMatrix}{A data frame containing an embedding matrix with
-identifiers in the index and columns representing embedding dimensions.}
+identifiers in the index and columns representing embedding dimensions.
+It is recommended that you utilize protemalyze::processData to clean the
+embedding matrix.}
 }
 \value{
 Produces an interactive plot of the UMAP created from an
@@ -16,13 +18,11 @@ Produces an interactive plot of the UMAP created from an
 }
 \description{
 A function that creates an interactive plot of the UMAP created from an
-    embedding matrix.
+    embedding matrix generated from a protein Language Model.
 }
 \examples{
-\dontrun{
 # Plot an interactive UMAP
-embeddingMatrix <- eColiEmbeddingMatrix
+embeddingMatrix <- SARSCoV2EmbeddingMatrix
 visualizeEmbeddingUMAP(embeddingMatrix)
-}
 
 }

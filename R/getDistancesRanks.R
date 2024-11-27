@@ -17,15 +17,12 @@
 #'     their associated distances from the distance matrix.
 #'
 #' @examples
-#' \dontrun{
-#' # Generate distance matrix with default setings
-#' embeddingMatrix <- eColiEmbeddingMatrix
-#' eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
+#' embeddingMatrix <- SARSCoV2EmbeddingMatrix
+#' distMatrix <- generateDistanceMatrix(embeddingMatrix)
 #'
 #' # Retrieve distances by mapping
-#' mapping <- eColiParalogMapping
-#' eColiParalogDistances <- getDistancesByMapping(eColiDistMatrix, mapping)
-#' }
+#' mapping <- SARSCoV2Mapping
+#' distances <- getDistancesByMapping(distMatrix, mapping)
 #'
 #' @export
 getDistancesByMapping <- function(distanceMatrix, mapping){
@@ -82,18 +79,16 @@ getDistancesByMapping <- function(distanceMatrix, mapping){
 #'     their associated rank from the rank matrix.
 #'
 #' @examples
-#' \dontrun{
 #' # Generate distance matrix with default setings
-#' embeddingMatrix <- eColiEmbeddingMatrix
-#' eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
+#' embeddingMatrix <- SARSCoV2EmbeddingMatrix
+#' distMatrix <- generateDistanceMatrix(embeddingMatrix)
 #'
 #' # Generate rank matrix from distance matrix
-#' eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
+#' rankMatrix <- generateRankMatrix(distMatrix)
 #'
 #' # Retrieve ranks by mapping
-#' mapping <- eColiParalogMapping
-#' eColiParalogRanks <- getRanksByMapping(eColiRankMatrix, mapping)
-#' }
+#' mapping <- SARSCoV2Mapping
+#' ranks <- getRanksByMapping(rankMatrix, mapping)
 #'
 #' @export
 getRanksByMapping <- function(rankMatrix, mapping){

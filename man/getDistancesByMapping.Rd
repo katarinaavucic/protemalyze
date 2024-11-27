@@ -8,10 +8,11 @@ getDistancesByMapping(distanceMatrix, mapping)
 }
 \arguments{
 \item{distanceMatrix}{A data frame representing the distance matrix from
-an embedding matrix. Each value in the distance matrix is the distance
-calculated between the row and column embeddings. The distance matrix
-should contain protein identifies in the row and columns indices, with
-the diagonal all zeroes.}
+an embedding matrix that has been generated from a protein Language
+Model. Each value in the distance matrix is the distance calculated
+between the row and column embeddings. The distance matrix should contain
+protein identifies in the row and columns indices, with the diagonal all
+zeroes.}
 
 \item{mapping}{A data frame with two columns of protein identifiers matching
 the identifiers used for the embedding matrix.}
@@ -21,18 +22,15 @@ Returns a data frame containing the proteins in the matching and
     their associated distances from the distance matrix.
 }
 \description{
-A function that generates a data frame containing the distances for specified
-    pairs using a mapping.
+A function that generates a data frame containing the distances from a
+    distance matrix between pairs from a user-specified mapping.
 }
 \examples{
-\dontrun{
-# Generate distance matrix with default setings
-embeddingMatrix <- eColiEmbeddingMatrix
-eColiDistMatrix <- generateDistanceMatrix(embeddingMatrix)
+embeddingMatrix <- SARSCoV2EmbeddingMatrix
+distMatrix <- generateDistanceMatrix(embeddingMatrix)
 
 # Retrieve distances by mapping
-mapping <- eColiParalogMapping
-eColiParalogDistances <- getDistancesByMapping(eColiDistMatrix, mapping)
-}
+mapping <- SARSCoV2Mapping
+distances <- getDistancesByMapping(distMatrix, mapping)
 
 }

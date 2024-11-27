@@ -8,7 +8,9 @@ visualizeRankDistribution(rankMatrix, mapping)
 }
 \arguments{
 \item{rankMatrix}{A data frame representing the rank matrix calculated from
-an embedding matrix. Each value in the rank matrix is the rank of the
+a distance matrix. The distance matrix is a data frame computed from
+an embedding matrix that has been generated from a protein Language
+Model. Each value in the rank matrix is the rank of the
 distance of the column protein compared to all other distances computed
 with the row protein. These are not reciprocal values, and the diagonal
 (where the row and column protein are the same) is always rank 0. The
@@ -26,16 +28,14 @@ A function that plots the distribution of embedding ranks from a rank matrix
     according to a mapping.
 }
 \examples{
-\dontrun{
 # Generate distance matrix with default setings
-eColiDistMatrix <- generateDistanceMatrix(eColiEmbeddingMatrix)
+distMatrix <- generateDistanceMatrix(SARSCoV2EmbeddingMatrix)
 
 # Generate rank matrix from distance matrix
-eColiRankMatrix <- generateRankMatrix(eColiDistMatrix)
+rankMatrix <- generateRankMatrix(distMatrix)
 
 # Visualize rank distribution by mapping
-mapping <- eColiParalogMapping
-visualizeRankDistribution(eColiRankMatrix, mapping)
-}
+mapping <- SARSCoV2Mapping
+visualizeRankDistribution(rankMatrix, mapping)
 
 }

@@ -7,8 +7,9 @@
 processData(embeddingMatrix)
 }
 \arguments{
-\item{embeddingMatrix}{A data frame containing an embedding matrix with
-identifiers in the index and columns representing embedding dimensions.}
+\item{embeddingMatrix}{A data frame containing an embedding matrix generated
+from a protein Lanugage Model with identifiers in the index and columns
+representing embedding dimensions.}
 }
 \value{
 Returns a data frame representing the embedding matrix with no NULL
@@ -17,13 +18,11 @@ Returns a data frame representing the embedding matrix with no NULL
 }
 \description{
 A function that removes NULL and duplicate values from a data frame
-representing an embedding matrix.
+representing an embedding matrix generated from a protein Language Model.
 }
 \examples{
-\dontrun{
 # Process the embedding matrix
-embeddingMatrix <- eColiEmbeddingMatrix
+embeddingMatrix <- SARSCoV2EmbeddingMatrix
 processedEmbeddingMatrix <- processData(embeddingMatrix)
-}
 
 }

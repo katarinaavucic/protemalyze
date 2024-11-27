@@ -11,11 +11,9 @@
 #'     or duplicate values. Protein identifiers are in the rows and embedding
 #'     dimensions in the columns.
 #' @examples
-#' \dontrun{
 #' # Process the embedding matrix
-#' embeddingMatrix <- eColiEmbeddingMatrix
+#' embeddingMatrix <- SARSCoV2EmbeddingMatrix
 #' processedEmbeddingMatrix <- processData(embeddingMatrix)
-#' }
 #'
 #' @export
 #' @import dplyr
