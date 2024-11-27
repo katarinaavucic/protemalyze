@@ -13,10 +13,14 @@ validMetrics <- c("bhjattacharyya", "bray", "canberra", "chord",
 
 #' Generate Distance Matrix
 #'
-#' A function that compute a distance matrix for an embedding matrix.
+#' A function that computes a distance matrix for an embedding matrix provided
+#' user's choice of distance metric and an embedding matrix derived from a
+#' protein Language Model.
 #'
 #' @param embeddingMatrix A data frame containing an embedding matrix with
 #'     identifiers in the index and columns representing embedding dimensions.
+#'     It is recommended that you utilize protemalyze::processData to clean the
+#'     embedding matrix.
 #'
 #' @param metric The metric to use for the distance matrix calculation. The
 #'     default is "euclidean", alternatives must be one of the ones listed in
@@ -75,13 +79,15 @@ generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
 
 #' Generate Rank Matrix
 #'
-#' A function that compute a rank matrix from a distance matrix.
+#' A function that computes a rank matrix from a distance matrix derived from
+#' an embedding matrix that has been generated from a protein Language Model.
 #'
 #' @param distanceMatrix A data frame representing the distance matrix from
-#'     an embedding matrix. Each value in the distance matrix is the distance
-#'     calculated between the row and column embeddings. The distance matrix
-#'     should contain protein identifies in the row and columns indices, with
-#'     the diagonal all zeroes.
+#'     an embedding matrix that has been generated from a protein Language
+#'     Model. Each value in the distance matrix is the distance calculated
+#'     between the row and column embeddings. The distance matrix should contain
+#'     protein identifies in the row and columns indices, with the diagonal all
+#'     zeroes.
 #'
 #' @return Returns a data frame representing the rank matrix calculated from
 #'     the distance matrix. Each value in the rank matrix is the rank of the

@@ -1,10 +1,12 @@
 #' Plot an Interactive UMAP From an Embedding Matrix
 #'
 #' A function that creates an interactive plot of the UMAP created from an
-#'     embedding matrix.
+#'     embedding matrix generated from a protein Language Model.
 #'
 #' @param embeddingMatrix A data frame containing an embedding matrix with
 #'     identifiers in the index and columns representing embedding dimensions.
+#'     It is recommended that you utilize protemalyze::processData to clean the
+#'     embedding matrix.
 #'
 #' @return Produces an interactive plot of the UMAP created from an
 #'     embedding matrix.
@@ -53,10 +55,11 @@ visualizeEmbeddingUMAP <- function(embeddingMatrix){
 #'     matrix according to a mapping.
 #'
 #' @param distanceMatrix A data frame representing the distance matrix from
-#'     an embedding matrix. Each value in the distance matrix is the distance
-#'     calculated between the row and column embeddings. The distance matrix
-#'     should contain protein identifies in the row and columns indices, with
-#'     the diagonal all zeroes.
+#'     an embedding matrix that has been generated from a protein Language
+#'     Model. Each value in the distance matrix is the distance calculated
+#'     between the row and column embeddings. The distance matrix should contain
+#'     protein identifies in the row and columns indices, with the diagonal all
+#'     zeroes.
 #'
 #' @param mapping A data frame with two columns of protein identifiers matching
 #'     the identifiers used for the embedding matrix.
@@ -127,7 +130,9 @@ visualizeDistanceDistribution <- function(distanceMatrix, mapping){
 #'     according to a mapping.
 #'
 #' @param rankMatrix A data frame representing the rank matrix calculated from
-#'     an embedding matrix. Each value in the rank matrix is the rank of the
+#'     a distance matrix. The distance matrix is a data frame computed from
+#'     an embedding matrix that has been generated from a protein Language
+#'     Model. Each value in the rank matrix is the rank of the
 #'     distance of the column protein compared to all other distances computed
 #'     with the row protein. These are not reciprocal values, and the diagonal
 #'     (where the row and column protein are the same) is always rank 0. The

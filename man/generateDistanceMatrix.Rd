@@ -8,7 +8,9 @@ generateDistanceMatrix(embeddingMatrix, metric = "euclidean", threads = NULL)
 }
 \arguments{
 \item{embeddingMatrix}{A data frame containing an embedding matrix with
-identifiers in the index and columns representing embedding dimensions.}
+identifiers in the index and columns representing embedding dimensions.
+It is recommended that you utilize protemalyze::processData to clean the
+embedding matrix.}
 
 \item{metric}{The metric to use for the distance matrix calculation. The
 default is "euclidean", alternatives must be one of the ones listed in
@@ -26,7 +28,9 @@ Returns a data frame representing the distance matrix calculated from
     and columns indices, and the diagonal is all zeroes.
 }
 \description{
-A function that compute a distance matrix for an embedding matrix.
+A function that computes a distance matrix for an embedding matrix provided
+user's choice of distance metric and an embedding matrix derived from a
+protein Language Model.
 }
 \examples{
 \dontrun{

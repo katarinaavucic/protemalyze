@@ -8,10 +8,11 @@ generateRankMatrix(distanceMatrix)
 }
 \arguments{
 \item{distanceMatrix}{A data frame representing the distance matrix from
-an embedding matrix. Each value in the distance matrix is the distance
-calculated between the row and column embeddings. The distance matrix
-should contain protein identifies in the row and columns indices, with
-the diagonal all zeroes.}
+an embedding matrix that has been generated from a protein Language
+Model. Each value in the distance matrix is the distance calculated
+between the row and column embeddings. The distance matrix should contain
+protein identifies in the row and columns indices, with the diagonal all
+zeroes.}
 }
 \value{
 Returns a data frame representing the rank matrix calculated from
@@ -22,7 +23,8 @@ Returns a data frame representing the rank matrix calculated from
     rank matrix contains protein identifies in the row and columns indices.
 }
 \description{
-A function that compute a rank matrix from a distance matrix.
+A function that computes a rank matrix from a distance matrix derived from
+an embedding matrix that has been generated from a protein Language Model.
 }
 \examples{
 \dontrun{
