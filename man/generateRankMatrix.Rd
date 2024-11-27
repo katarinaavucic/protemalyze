@@ -35,3 +35,7 @@ distMatrix <- generateDistanceMatrix(embeddingMatrix)
 rankMatrix <- generateRankMatrix(distMatrix)
 
 }
+\references{
+Bengtsson H (2023). matrixStats: Functions that Apply to Rows and Columns of
+Matrices (and to Vectors). R package version 1.0.0.
+}

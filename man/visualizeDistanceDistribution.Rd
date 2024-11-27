@@ -34,3 +34,8 @@ mapping <- SARSCoV2Mapping
 visualizeDistanceDistribution(distMatrix, mapping)
 
 }
+\references{
+Wickham H, Chang W, Henry L, Pedersen TL, Takahashi K, Wilke C, Woo K, Yutani
+H, Dunnington D (2023). ggplot2: Create Elegant Data Visualisations Using the
+Grammar of Graphics. R package version 3.4.3.
+}

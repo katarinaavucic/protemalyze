@@ -45,3 +45,7 @@ distMatrix <- generateDistanceMatrix(embeddingMatrix,
                                            threads=4)
 
 }
+\references{
+Eckert A (2023). parallelDist: Parallel Distance Matrix Computation using
+Multiple Threads. R package version 0.2.6.
+}

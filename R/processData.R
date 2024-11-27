@@ -15,6 +15,13 @@
 #' embeddingMatrix <- SARSCoV2EmbeddingMatrix
 #' processedEmbeddingMatrix <- processData(embeddingMatrix)
 #'
+#' @references
+#' Müller K, Wickham H (2023). tibble: Simple Data Frames. R package version
+#' 3.2.1.
+#'
+#' Wickham H, François R, Henry L, Müller K, Vaughan D (2023). dplyr: A Grammar
+#' of Data Manipulation. R package version 1.1.3.
+#'
 #' @export
 #' @import dplyr
 #' @import tibble

@@ -33,3 +33,10 @@ A function that loads an embedding matrix generated using a protein Language
 }
 
 }
+\references{
+Fischer B, Smith M, Pau G (2023). rhdf5: R Interface to HDF5. R package
+version 2.44.0.
+
+Wickham H, Hester J, Bryan J (2023). readr: Read Rectangular Text Data. R
+package version 2.1.4.
+}

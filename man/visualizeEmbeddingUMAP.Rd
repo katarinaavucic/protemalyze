@@ -26,3 +26,10 @@ embeddingMatrix <- SARSCoV2EmbeddingMatrix
 visualizeEmbeddingUMAP(embeddingMatrix)
 
 }
+\references{
+Sievert C (2023). plotly: Create Interactive Web Graphics via 'plotly.js'. R
+package version 4.10.2.
+
+Konopka T (2023). umap: Uniform Manifold Approximation and Projection. R
+package version 0.2.10.0
+}

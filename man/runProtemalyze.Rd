@@ -16,8 +16,11 @@ protein embeddings.
 }
 \examples{
 \dontrun{
-
 protemalyze::runProtemalyze()
 }
 
+}
+\references{
+Chang, W., Cheng, J., Allaire, J. J., Sievert, C., Scherer, L., & Wison, A.
+(2022). Shiny: Web Application Framework for R. R package version 1.7.1.
 }

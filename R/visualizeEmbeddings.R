@@ -16,6 +16,13 @@
 #' embeddingMatrix <- SARSCoV2EmbeddingMatrix
 #' visualizeEmbeddingUMAP(embeddingMatrix)
 #'
+#' @references
+#' Sievert C (2023). plotly: Create Interactive Web Graphics via 'plotly.js'. R
+#' package version 4.10.2.
+#'
+#' Konopka T (2023). umap: Uniform Manifold Approximation and Projection. R
+#' package version 0.2.10.0
+#'
 #' @import dplyr
 #' @import umap
 #' @importFrom plotly plot_ly layout
@@ -72,6 +79,11 @@ visualizeEmbeddingUMAP <- function(embeddingMatrix){
 #' # Visualize distance distribution by mapping
 #' mapping <- SARSCoV2Mapping
 #' visualizeDistanceDistribution(distMatrix, mapping)
+#'
+#' @references
+#' Wickham H, Chang W, Henry L, Pedersen TL, Takahashi K, Wilke C, Woo K, Yutani
+#' H, Dunnington D (2023). ggplot2: Create Elegant Data Visualisations Using the
+#' Grammar of Graphics. R package version 3.4.3.
 #'
 #' @import ggplot2
 #' @importFrom stats median
@@ -150,6 +162,11 @@ visualizeDistanceDistribution <- function(distanceMatrix, mapping){
 #' # Visualize rank distribution by mapping
 #' mapping <- SARSCoV2Mapping
 #' visualizeRankDistribution(rankMatrix, mapping)
+#'
+#' @references
+#' Wickham H, Chang W, Henry L, Pedersen TL, Takahashi K, Wilke C, Woo K, Yutani
+#' H, Dunnington D (2023). ggplot2: Create Elegant Data Visualisations Using the
+#' Grammar of Graphics. R package version 3.4.3.
 #'
 #' @import ggplot2
 #' @importFrom stats median

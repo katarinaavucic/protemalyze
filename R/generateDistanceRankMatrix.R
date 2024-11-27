@@ -48,6 +48,10 @@ validMetrics <- c("bhjattacharyya", "bray", "canberra", "chord",
 #' distMatrix <- generateDistanceMatrix(embeddingMatrix,
 #'                                            threads=4)
 #'
+#' @references
+#' Eckert A (2023). parallelDist: Parallel Distance Matrix Computation using
+#' Multiple Threads. R package version 0.2.6.
+#'
 #' @export
 #' @import parallelDist
 generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
@@ -101,6 +105,10 @@ generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
 #'
 #' # Generate rank matrix from distance matrix
 #' rankMatrix <- generateRankMatrix(distMatrix)
+#'
+#' @references
+#' Bengtsson H (2023). matrixStats: Functions that Apply to Rows and Columns of
+#' Matrices (and to Vectors). R package version 1.0.0.
 #'
 #' @export
 #' @importFrom matrixStats rowRanks
