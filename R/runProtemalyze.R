@@ -15,6 +15,11 @@
 #' Chang, W., Cheng, J., Allaire, J. J., Sievert, C., Scherer, L., & Wison, A.
 #' (2022). Shiny: Web Application Framework for R. R package version 1.7.1.
 #'
+#' Wickham, H. (2018). Chapter 9 Uploads and downloads | Mastering Shiny.
+#' Mastering-Shiny.org.
+#'
+#' Xie, Y. (2017, June 28). Shiny - How to use DataTables in a Shiny App. Shiny.
+#'
 #' @export
 #' @importFrom shiny runApp
 #' @import dplyr

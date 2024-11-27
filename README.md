@@ -141,9 +141,8 @@ in a matrix. The function makes use of the `readr`, `rhdf5`, and `dplyr`
 R packages. The `readr` package is used for reading CSV and TSV files.
 The`rhdf5` is used for loading data stored in HDF5 format, especially
 for larger datasets. The `dplyr` package is used for organizing the
-imported data into a readable format. The `rhdf5`
-[vignette](https://www.bioconductor.org/packages/devel/bioc/vignettes/rhdf5/inst/doc/rhdf5.html#high-level-r-hdf5-functions)
-was referenced to read the h5 file.
+imported data into a readable format. The `rhdf5` vignette (Fischer &
+Smith, 2024) was referenced to read the h5 file.
 
 2.  `processData`
 
@@ -236,10 +235,9 @@ proteins in the embedding space. The function makes use of the `umap`
 and `plotly` R packages. The `umap` package is used for dimensionality
 reduction, specifically for creating the UMAP projection of the
 embedding matrix. The `plotly` package is used for creating interactive
-plots of the UMAP results. The `plotly` [scatter and line plots in
-R](https://plotly.com/r/line-and-scatter/) and [marker
-styling](https://plotly.com/r/marker-style/) documentation were
-referenced during the creation of the function.
+plots of the UMAP results. The `plotly` scatter and line plots in R and
+marker styling documentation (Plotly Group, n.d.) were referenced during
+the creation of the function.
 
 10. `visualizeDistanceDistribution`
 
@@ -250,13 +248,10 @@ of embedding distances from the distance matrix according to a given
 mapping. It helps in analyzing how the distances between proteins are
 distributed. The function makes use of the `ggplot2` R packages. The
 `ggplot2` is used for creating visualizations of the distance
-distribution. The `ggplot2` [geom_histogram
-examples](https://ggplot2.tidyverse.org/reference/geom_histogram.html)
-and [general documentation](https://ggplot2.tidyverse.org/reference/)
-was referenced throughoout the creation of this function. The Geeks for
-Geeks [adding the mean line
-example](https://www.geeksforgeeks.org/how-to-display-mean-in-a-histogram-using-ggplot2-in-r/)
-was referenced to add the median line.
+distribution. The `ggplot2` geom_histogram examples (Wickham, n.d.) were
+referenced throughout the creation of this function. The Geeks for Geeks
+example on adding the mean line (GeeksforGeeks, 2024) was referenced to
+add the median line.
 
 11. `visualizeRankDistribution`
 
@@ -267,13 +262,11 @@ embedding ranks from the rank matrix according to a given mapping. It
 helps in analyzing how the ranks of proteins are distributed. The
 function makes use of the `ggplot2` R packages. The `ggplot2` is used
 for creating visualizations of the distance distribution. The `ggplot2`
-[geom_histogram
-examples](https://ggplot2.tidyverse.org/reference/geom_histogram.html)
-and [general documentation](https://ggplot2.tidyverse.org/reference/)
-was referenced throughoout the creation of this function. The Geeks for
-Geeks [adding the mean line
-example](https://www.geeksforgeeks.org/how-to-display-mean-in-a-histogram-using-ggplot2-in-r/)
-was referenced to add the median line.
+is used for creating visualizations of the distance distribution. The
+`ggplot2` geom_histogram examples (Wickham, n.d.) were referenced
+throughout the creation of this function. The Geeks for Geeks example on
+adding the mean line (GeeksforGeeks, 2024) was referenced to add the
+median line.
 
 12. `runProtemalyze`
 
@@ -284,27 +277,20 @@ for the `protemalyze` package. It provides an interactive interface for
 visualizing and analyzing protein embeddings. The function makes use of
 the `shiny` R package. The `shiny` package is used for creating the web
 application framework and handling the app’s user interface and server
-logic. The [Shiny Gallery on
-Tabsets](https://shiny.posit.co/r/gallery/application-layout/tabsets/)
-was used as a reference for designing the overall tabbed layout. The
-`shiny`
-[fluidPage](https://shiny.posit.co/r/reference/shiny/1.8.0/fluidpage.html)
-function was referenced to create the layout structure. The `DT` package
-is used for displaying interactive data tables within the app, as
-described in the [Shiny Article on
-DataTables](https://shiny.posit.co/r/articles/build/datatables/). The
-`plotly` package is used for creating interactive plots, allowing users
-to explore the data dynamically. The `fileInput` function for file
-uploads was implemented using the [Shiny Gallery on File
-Upload](https://shiny.posit.co/r/gallery/widgets/file-upload/), and file
-download functionality is handled by the `downloadHandler`, as described
-in the [Shiny Reference for
-downloadHandler](https://shiny.posit.co/r/reference/shiny/0.11/downloadhandler.html).
-Additionally, the function references techniques from [Mastering
-Shiny](https://mastering-shiny.org/action-transfer.html) to manage file
-uploads and set an upload limit of 50MB and retrieving the file type is
-also based on information from [Mastering
-Shiny](https://mastering-shiny.org/action-transfer.html).
+logic. The Shiny documentation on Tabsets was used as a reference for
+designing the overall tabbed layout (Chang et al., 2022). The `shiny`
+fluidPage documentation was referenced to create the layout structure.
+The `DT` package is used for displaying interactive data tables within
+the app, as described in the Shiny Article on DataTables (Xie, 2017).
+The `plotly` package is used for creating interactive plots, allowing
+users to explore the data dynamically. The fileInput function for file
+uploads was implemented using the Shiny documentation on file upload and
+file download functionality is handled by the downloadHandler, as
+described in the Shiny Reference for downloadHandler (Chang et al.,
+2022). Additionally, the function references techniques from Mastering
+Shiny to manage file uploads and set an upload limit of 50MB, and
+retrieving the file type is also based on information from Mastering
+Shiny(Wickham, 2018).
 
 Raw per-protein embeddings for *E. coli*, stored in
 **eColiEmbeddingMatrix**, were generated by Uniprot (Batemen et al.,
@@ -366,6 +352,11 @@ documentation or other examples as listed above.
 - [Fischer B, Smith M, Pau G (2023). rhdf5: R Interface to HDF5. R
   package version
   2.44.0.](https://bioconductor.org/packages/release/bioc/html/rhdf5.html)
+- [Fischer, B., & Smith, M. L. (2024). rhdf5 - HDF5 interface for R.
+  Bioconductor.org](https://www.bioconductor.org/packages/devel/bioc/vignettes/rhdf5/inst/doc/rhdf5.html#high-level-r-hdf5-functions)
+- [GeeksforGeeks. (2024). How to display mean in a histogram using
+  ggplot2 in R?
+  GeeksforGeeks.](https://www.geeksforgeeks.org/how-to-display-mean-in-a-histogram-using-ggplot2-in-r/)
 - [Inc., P. T. (2015). plotly. Collaborative data science. Montreal, QC:
   Plotly Technologies Inc](https://plot.ly)
 - [Konopka T (2023). umap: Uniform Manifold Approximation and
@@ -374,9 +365,18 @@ documentation or other examples as listed above.
 - [Müller K, Wickham H (2023). tibble: Simple Data Frames. R package
   version 3.2.1.](https://CRAN.R-project.org/package=tibble)
 - [Perplexity.ai](https://www.perplexity.ai/)
+- [Plotly Group. (n.d.). Marker.
+  Plotly.com.](https://plotly.com/r/marker-style/)
+- [Plotly Group. (n.d.). Scatter and Line Plots.
+  Plotly.com.](https://plotly.com/r/line-and-scatter/)
 - [Sievert C (2023). plotly: Create Interactive Web Graphics via
   ‘plotly.js’. R package version
   4.10.2.](https://CRAN.R-project.org/package=plotly)
+- [Wickham, H. (n.d.). Histograms and frequency polygons —
+  geom_freqpoly.](Ggplot2.Tidyverse.org.%20https://ggplot2.tidyverse.org/reference/geom_histogram.html)
+- [Wickham, H. (2018). Chapter 9 Uploads and downloads \| Mastering
+  Shiny.
+  Mastering-Shiny.org.](https://mastering-shiny.org/action-transfer.html)
 - [Wickham H, François R, Henry L, Müller K, Vaughan D (2023). dplyr: A
   Grammar of Data Manipulation. R package version
   1.1.3.](https://CRAN.R-project.org/package=dplyr)
@@ -387,6 +387,8 @@ documentation or other examples as listed above.
 - [Wickham H, Hester J, Bryan J (2023). readr: Read Rectangular Text
   Data. R package version
   2.1.4.](https://CRAN.R-project.org/package=readr)
+- [Xie, Y. (2017). Shiny - How to use DataTables in a Shiny App.
+  Shiny.](https://shiny.posit.co/r/articles/build/datatables/)
 - [Yang, K. K., Wu, Z., Bedbrook, C. N., & Arnold, F. H. (2018). Learned
   protein embeddings for machine learning. Bioinformatics, 34(15),
   2642–2648.](https://doi.org/10.1093/bioinformatics/bty178)
