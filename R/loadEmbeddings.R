@@ -51,6 +51,8 @@ loadEmbeddings <- function(path, fileType){
   # Read from h5 file.
   else if (fileType == "h5") {
     # Load each dataset as a seperate row and transpose them to maintain shape.
+    # Referenced https://www.bioconductor.org/packages/devel/bioc/vignettes/
+    # rhdf5/inst/doc/rhdf5.html#high-level-r-hdf5-functions
     data_list <- h5read(path, "/")
     matrix <- data_list %>%
       bind_rows() %>%

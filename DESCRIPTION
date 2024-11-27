@@ -22,12 +22,14 @@ RoxygenNote: 7.3.2
 biocViews:
 Imports: 
     dplyr,
+    DT,
     ggplot2,
     matrixStats,
     parallelDist,
     plotly,
     readr,
     rhdf5,
+    shiny,
     tibble,
     umap
 Depends: 

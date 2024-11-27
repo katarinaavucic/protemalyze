@@ -25,6 +25,8 @@ knitr::opts_chunk$set(
 
 The *protemalyze* package was developed using R version 4.4.1 (2024-06-14), Platform: aarch64-apple-darwin20 (64-bit) and Running under: macOS Sonoma 14.5.
 
+---
+
 ## Installation
 
 You can install the development version of protemalyze like so:
@@ -36,6 +38,7 @@ devtools::install_github("katarinaavucic/protemalyze", build_vignettes = TRUE)
 library("protemalyze")
 ```
 
+---
 
 ## Overview
 
@@ -54,7 +57,7 @@ To access tutorials for the package:
 browseVignettes("protemalyze")
 ```
 
-`protemalyze` contains 11 functions.
+`protemalyze` contains 12 functions.
 
 1.  ***loadEmbeddings*** for loading an embedding matrix from a "csv", tsv", or "h5" file.
 
@@ -78,27 +81,102 @@ browseVignettes("protemalyze")
 
 11. ***visualizeRankDistribution*** for visualizing the distribution of embedding ranks from a rank matrix according to a mapping.
 
+12. **runProtemalyze** for launching the Shiny app which provides an interactive interface for visualizing and analyzing protein embeddings.
+
 The package also contains an embedding matrix from Escherichia coli, called **eColiEmbeddingMatrix** and a mapping of the paralogs in Escherichia coli, called **eColiParalogMapping**. Refer to package vignettes for more details. An overview of the package is illustrated below. 
 
 ![](./inst/extdata/protemalyzeOverview.jpg)
+
+---
 
 ## Contributions
 
 The creator and maintainer of this package is Katarina Vucic, who wrote all of the functions. 
 
-This package relies on several external packages:
 
-- `dplyr` and `tibble` are used for data manipulation and organizing data frames in the **loadEmbeddings** and **processData** functions. These packages make it easy to work with data in a clean and readable format.
+1. `loadEmbeddings`
 
-- `readr` and `rhdf5` are used to import data in the **loadEmbeddings** function. `readr` handles reading CSV files, while `rhdf5` is used for loading data stored in HDF5 format, which is useful for larger datasets.
+**Author:** Katarina Vucic
 
-- `ggplot2` is used to create visualizations in the functions **visualizeDistanceDistribution** and **visualizeRankDistribution**. These functions help show the distribution of distances and ranks across the data.
+The `loadEmbeddings` function is responsible for loading an embedding matrix from a file, which can be in "csv", "tsv", or "h5" format. It uses different file-importing techniques to read the data and store it in a matrix. The function makes use of the `readr`, `rhdf5`, and `dplyr` R packages. The `readr` package is used for reading CSV and TSV files. The`rhdf5` is used for loading data stored in HDF5 format, especially for larger datasets. The `dplyr` package is used for organizing the imported data into a readable format. The `rhdf5` [vignette](https://www.bioconductor.org/packages/devel/bioc/vignettes/rhdf5/inst/doc/rhdf5.html#high-level-r-hdf5-functions) was referenced to read the h5 file.
 
-- `plotly` and `umap` are used in the **visualizeEmbeddingUMAP** function to create interactive visualizations. They reduce the data to a lower-dimensional space and provide an interactive UMAP plot to explore protein relationships.
 
-- `parallelDist` is used in **generateDistanceMatrix** to efficiently calculate the distance matrix, using parallel processing to handle large datasets.
+2. `processData`
 
-- `matrixStats` is used in **generateRankMatrix** to quickly compute ranks for the distance matrix. This package provides fast methods for calculating ranks on large data.
+**Author:** Katarina Vucic
+
+The `processData` function is responsible for cleaning the embedding matrix by removing NULL values and duplicates. It uses standard data manipulation techniques to ensure the matrix is free from missing values or duplicate proteins. The function makes use of the `dplyr` and `tibble` R packages. The `dplyr` package is used for data manipulation tasks such as removing NULL and duplicate values. The `tibble` package is used for organizing the cleaned data into a tibble format.
+
+
+3. `generateDistanceMatrix`
+
+**Author:** Katarina Vucic
+
+The `generateDistanceMatrix` function computes a distance matrix from the provided embedding matrix. It calculates pairwise distances between protein embeddings, which can be used for further analysis. The function makes use of the `parallelDist` R packages. The `parallelDist` package is used for efficiently calculating the distance matrix using parallel processing, which helps handle large datasets. The `parallelDist` package performs the underlying pairwise distance computation. 
+
+
+4. `generateRankMatrix`
+
+**Author:** Katarina Vucic
+
+The `generateRankMatrix` function computes a rank matrix from the embedding matrix. It ranks the distances between proteins, providing a relative measure of how close or far proteins are in the embedding space. The function makes use of the `matrixStats` R packages. The `matrixStats` package is used for efficiently calculating ranks in large datasets. The `matrixStats` package performs the underlying rank computation.
+
+
+5. `getClosestPair`
+
+**Author:** Katarina Vucic
+
+The `getClosestPair` function retrieves the closest protein pair for each protein in the ranked matrix. It identifies the most similar protein for each protein based on the calculated ranks. The function makes use of the `base` R package. The `which()` function is used to determine the columns with a rank of 1.
+
+
+6. `getFarthestPair`
+
+**Author:** Katarina Vucic
+
+The `getFarthestPair` function retrieves the farthest protein pair for each protein in the ranked matrix. It identifies the most dissimilar protein for each protein based on the calculated ranks. The function makes use of the `base` R package. The `which()` function is used to determine the columns with a rank equal to the number of rows.
+
+
+7. `getDistanceByMapping`
+
+**Author:** Katarina Vucic
+
+The `getDistanceByMapping` function retrieves the embedding distances from the distance matrix for protein pairs in a provided mapping. It returns the pairwise distances for proteins based on a predefined mapping, such as paralog mappings. The function makes use of the `base` R package. The `match()` function is used to find the indices of protein pairs in the distance matrix. The `cbind()` function is used to index the specific positions in the distance matrix for the protein pairs.
+
+
+8. `getRankByMapping`
+
+**Author:** Katarina Vucic
+
+The `getRankByMapping` function retrieves the embedding ranks from the rank matrix for protein pairs in a provided mapping. It returns the pairwise ranks for proteins based on a predefined mapping, such as paralog mappings. The function makes use of the `base` R package. The `match()` function is used to find the indices of protein pairs in the distance matrix. The `cbind()` function is used to index the specific positions in the distance matrix for the protein pairs.
+
+
+9. `visualizeEmbeddingUMAP`
+
+**Author:** Katarina Vucic
+
+The `visualizeEmbeddingUMAP` function visualizes the embedding matrix by reducing the data to a lower-dimensional space and creating an interactive UMAP plot. It allows the user to explore the positions of proteins in the embedding space. The function makes use of the `umap` and `plotly` R packages. The `umap` package is used for dimensionality reduction, specifically for creating the UMAP projection of the embedding matrix. The `plotly` package is used for creating interactive plots of the UMAP results. The `plotly` [scatter and line plots in R](https://plotly.com/r/line-and-scatter/) and [marker styling](https://plotly.com/r/marker-style/) documentation were referenced during the creation of the function. 
+
+
+10. `visualizeDistanceDistribution`
+
+**Author:** Katarina Vucic
+
+The `visualizeDistanceDistribution` function visualizes the distribution of embedding distances from the distance matrix according to a given mapping. It helps in analyzing how the distances between proteins are distributed. The function makes use of the `ggplot2` R packages. The `ggplot2` is used for creating visualizations of the distance distribution. The `ggplot2` [geom_histogram examples](https://ggplot2.tidyverse.org/reference/geom_histogram.html) and [general documentation](https://ggplot2.tidyverse.org/reference/) was referenced throughoout the creation of this function. The Geeks for Geeks [adding the mean line example](https://www.geeksforgeeks.org/how-to-display-mean-in-a-histogram-using-ggplot2-in-r/) was referenced to add the median line.
+
+
+11. `visualizeRankDistribution`
+
+**Author:** Katarina Vucic
+
+The `visualizeRankDistribution` function visualizes the distribution of embedding ranks from the rank matrix according to a given mapping. It helps in analyzing how the ranks of proteins are distributed. The function makes use of the `ggplot2` R packages. The `ggplot2` is used for creating visualizations of the distance distribution. The `ggplot2` [geom_histogram examples](https://ggplot2.tidyverse.org/reference/geom_histogram.html) and [general documentation](https://ggplot2.tidyverse.org/reference/) was referenced throughoout the creation of this function. The Geeks for Geeks [adding the mean line example](https://www.geeksforgeeks.org/how-to-display-mean-in-a-histogram-using-ggplot2-in-r/) was referenced to add the median line.
+
+
+12. `runProtemalyze`
+
+**Author:** Katarina Vucic
+
+The `runProtemalyze` function is responsible for launching the Shiny app for the `protemalyze` package. It provides an interactive interface for visualizing and analyzing protein embeddings. The function makes use of the `shiny` R package. The `shiny` package is used for creating the web application framework and handling the app's user interface and server logic. The [Shiny Gallery on Tabsets](https://shiny.posit.co/r/gallery/application-layout/tabsets/) was used as a reference for designing the overall tabbed layout. The `shiny` [fluidPage](https://shiny.posit.co/r/reference/shiny/1.8.0/fluidpage.html) function was referenced to create the layout structure. The `DT` package is used for displaying interactive data tables within the app, as described in the [Shiny Article on DataTables](https://shiny.posit.co/r/articles/build/datatables/). The `plotly` package is used for creating interactive plots, allowing users to explore the data dynamically. The `fileInput` function for file uploads was implemented using the [Shiny Gallery on File Upload](https://shiny.posit.co/r/gallery/widgets/file-upload/), and file download functionality is handled by the `downloadHandler`, as described in the [Shiny Reference for downloadHandler](https://shiny.posit.co/r/reference/shiny/0.11/downloadhandler.html). Additionally, the function references techniques from [Mastering Shiny](https://mastering-shiny.org/action-transfer.html) to manage file uploads and set an upload limit of 50MB and retrieving the file type is also based on information from [Mastering Shiny](https://mastering-shiny.org/action-transfer.html).
+
 
 Raw per-protein embeddings for E. coli, stored in **eColiEmbeddingMatrix**, were generated by Uniprot (Batemen et al., 2022). The one-to-many paralog mapping for E. coli, stored in **eColiParalogMapping**, were generated using the Orthologous Matrix (OMA) Browser (Altenhoff et al., 2018).
 

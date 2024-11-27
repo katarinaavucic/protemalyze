@@ -1,23 +1,6 @@
-# base template (include citation)
-# https://shiny.posit.co/r/gallery/application-layout/tabsets/
-# file upload (include citation)
-# https://shiny.posit.co/r/gallery/widgets/file-upload/
-# fluid row (include citation)
-# https://shiny.posit.co/r/reference/shiny/1.8.0/fluidpage.html
-# DT (include citation)
-# https://shiny.posit.co/r/articles/build/datatables/
-# downlaod
-# https://shiny.posit.co/r/reference/shiny/0.11/downloadhandler.html
-# retrieving file type source
-# https://mastering-shiny.org/action-transfer.html
-
-library(shiny)
-library(plotly)
-library(DT)
-library(dplyr)
 
 # Set the upload limit to 50MB
-# source: https://mastering-shiny.org/action-transfer.html
+# References https://mastering-shiny.org/action-transfer.html
 options(shiny.maxRequestSize = 50 * 1024^2)
 
 
@@ -33,10 +16,12 @@ ui <- fluidPage(
     # Sidebar panel for inputs ----
     sidebarPanel(width = 3,
       # Input file for Embedding Matrix (required).
+      # Refrences https://shiny.posit.co/r/gallery/widgets/file-upload/
       fileInput("embeddingFile", "Input Embedding Matrix File",
                 accept = c(".csv", ".tsv", ".h5")),
 
       # Input file for Mapping (optional).
+      # Refrences https://shiny.posit.co/r/gallery/widgets/file-upload/
       fileInput("mappingFile", "Optional: Input Mapping File",
                 accept = c(".csv", ".tsv")),
 
@@ -67,8 +52,12 @@ ui <- fluidPage(
 
 
       # Output tabset with UMAP, Pairs, and Mapping Analysis ----
+      # Refrences https://shiny.posit.co/r/gallery/application-layout/tabsets/
       tabsetPanel(type = "tabs",
                   tabPanel("Embedding UMAP", plotlyOutput("umapPlot")),
+                  # Fluid row allows for formatting of items within a panel
+                  # References
+                  #https://shiny.posit.co/r/reference/shiny/1.8.0/fluidpage.html
                   tabPanel("Closest and Farthest Pairs", fluidRow(
                     h3("Closest and Farthest Pairs Table"),
                     downloadLink('downloadPairs', 'Download Table'),
@@ -86,6 +75,7 @@ server <- function(input, output) {
   # Reactive expression to load and process embedding matrix when file is uploaded.
   embeddingMatrix <- reactive({
     req(input$embeddingFile)
+    # References https://mastering-shiny.org/action-transfer.html
     fileType <- tools::file_ext(input$embeddingFile$name)
     embeddingMatrix <- loadEmbeddings(input$embeddingFile$datapath, fileType)
     embeddingMatrix <- processData(embeddingMatrix)
@@ -132,6 +122,8 @@ server <- function(input, output) {
                                              by = "Protein")
 
       # Return button to download the table.
+      # References
+      # https://shiny.posit.co/r/reference/shiny/0.11/downloadhandler.html
       output$downloadPairs <- downloadHandler(
         filename = function() {
           paste('closest_and_farthest_pairs_', Sys.Date(), '.csv', sep='')
@@ -142,6 +134,7 @@ server <- function(input, output) {
       )
 
       # Render the closest and farthest pairs table.
+      # References https://shiny.posit.co/r/articles/build/datatables/
       output$pairsTable <- renderDT({
         return(datatable(combinedPairsTable,
                          options = list(pageLength = 10,
@@ -167,6 +160,8 @@ server <- function(input, output) {
                                                  by = c("Protein1", "Protein2"))
 
         # Return button to download the table.
+        # References
+        # https://shiny.posit.co/r/reference/shiny/0.11/downloadhandler.html
         output$downloadMapping <- downloadHandler(
           filename = function() {
             paste('mapping_distances_and_ranks_', Sys.Date(), '.csv', sep='')
@@ -177,6 +172,7 @@ server <- function(input, output) {
         )
 
         # Render the distance and rank table for the mapping.
+        # References https://shiny.posit.co/r/articles/build/datatables/
         output$mappingTable <- renderDT({
           return(datatable(combinedMappingTable,
                            options = list(pageLength = 10,
@@ -201,6 +197,9 @@ server <- function(input, output) {
         # Render the content of the Mapping tab conditionally
         output$mappingTabContent <- renderUI({
           if (mappingUploaded()) {
+            # Fluid row allows for formatting of items within a panel
+            # References
+            # https://shiny.posit.co/r/reference/shiny/1.8.0/fluidpage.html
             fluidRow(
               column(12,
                      h3("Distance and Rank Table"),
@@ -228,3 +227,5 @@ server <- function(input, output) {
 
 # Create Shiny app ----
 shinyApp(ui, server)
+
+# [END]

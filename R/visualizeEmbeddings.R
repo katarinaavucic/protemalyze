@@ -27,9 +27,11 @@ visualizeEmbeddingUMAP <- function(embeddingMatrix){
   layout <- data.frame(umap[["layout"]])
 
   # Create interactive plot.
+  # Referenced https://plotly.com/r/line-and-scatter/
   plot <- plotly::plot_ly(data = layout, x = ~X1, y = ~X2, type = "scatter",
                           mode = "markers", text = rownames(layout),
                           hoverinfo = "text",
+                          # Referenced https://plotly.com/r/marker-style/
                           marker = list(size = 10, opacity = 0.8,
                                         color = '#b78ec1',
                                         line = list(color = '#884499',
@@ -82,9 +84,12 @@ visualizeDistanceDistribution <- function(distanceMatrix, mapping){
   binwidth <- dataRange / 25
 
   plot <- ggplot2::ggplot(mappingDistances, ggplot2::aes(x = Distance)) +
-    # Add median line.
+    # Referenced https://ggplot2.tidyverse.org/reference/geom_histogram.html
     ggplot2::geom_histogram(binwidth = binwidth, fill = "#b78ec1",
                             color = "lightgray", alpha = 0.9, boundary = 0) +
+    # Add median line.
+    # Referenced https://www.geeksforgeeks.org/how-to-display-mean-in-a-
+    # histogram-using-ggplot2-in-r/
     ggplot2::geom_vline(ggplot2::aes(xintercept = stats::median(Distance)),
                         color = "darkred", linetype = "dashed",
                         linewidth = 0.5) +
@@ -154,9 +159,12 @@ visualizeRankDistribution <- function(rankMatrix, mapping){
   binwidth <- dataRange / 25
 
   plot <- ggplot2::ggplot(mappingRanks, ggplot2::aes(x = Rank)) +
-    # Add median line.
+    # Referenced https://ggplot2.tidyverse.org/reference/geom_histogram.html
     ggplot2::geom_histogram(binwidth = binwidth, fill = "#b78ec1",
                             color = "lightgray", alpha = 0.9, boundary = 0) +
+    # Add median line.
+    # Referenced https://www.geeksforgeeks.org/how-to-display-mean-in-a-
+    # histogram-using-ggplot2-in-r/
     ggplot2::geom_vline(ggplot2::aes(xintercept = stats::median(Rank)),
                         color = "darkred", linetype = "dashed",
                         linewidth = 0.5) +
