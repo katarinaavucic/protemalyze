@@ -29,6 +29,9 @@
 #' @export
 getClosestPairs <- function(rankMatrix){
 
+  # Error checking for rankMatrix.
+  checkMatrix(rankMatrix, type="rankMatrix")
+
   # Convert to matrix, perform computation, convert back to data frame for user.
   asMatrix <- as.matrix(rankMatrix)
 
@@ -75,6 +78,9 @@ getClosestPairs <- function(rankMatrix){
 #'
 #' @export
 getFarthestPairs <- function(rankMatrix){
+
+  # Error checking for rankMatrix.
+  checkMatrix(rankMatrix, type="rankMatrix")
 
   # Convert to matrix, perform computation, convert back to data frame for user.
   asMatrix <- as.matrix(rankMatrix)

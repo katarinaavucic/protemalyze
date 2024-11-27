@@ -22,6 +22,9 @@
 #' @export
 visualizeEmbeddingUMAP <- function(embeddingMatrix){
 
+  # Error checking for embeddingMatrix
+  checkMatrix(embeddingMatrix, type="embeddingMatrix")
+
   # Generate umap from embedding matrix.
   umap <- umap::umap(embeddingMatrix, n_components = 2)
   layout <- data.frame(umap[["layout"]])
@@ -75,6 +78,9 @@ visualizeEmbeddingUMAP <- function(embeddingMatrix){
 #' @importFrom stats median
 #' @export
 visualizeDistanceDistribution <- function(distanceMatrix, mapping){
+
+  # Error checking for distMatrix.
+  checkMatrix(distanceMatrix, type="distanceMatrix")
 
   # Retrieve distances for the mapping.
   mappingDistances <- getDistancesByMapping(distanceMatrix, mapping)
@@ -150,6 +156,9 @@ visualizeDistanceDistribution <- function(distanceMatrix, mapping){
 #' @importFrom stats median
 #' @export
 visualizeRankDistribution <- function(rankMatrix, mapping){
+
+  # Error checking for rankMatrix.
+  checkMatrix(rankMatrix, type="rankMatrix")
 
   # Retrieve distances for the mapping.
   mappingRanks <- getRanksByMapping(rankMatrix, mapping)

@@ -103,7 +103,7 @@ generateDistanceMatrix <- function(embeddingMatrix, metric="euclidean",
 #' @importFrom matrixStats rowRanks
 generateRankMatrix <- function(distanceMatrix){
 
-  # Error checking for distMatrix (these checks are general and apply here as well)
+  # Error checking for distMatrix.
   checkMatrix(distanceMatrix, type="distanceMatrix")
 
   # Error if the column names do not exist.

@@ -29,6 +29,9 @@
 #' @export
 getDistancesByMapping <- function(distanceMatrix, mapping){
 
+  # Error checking for distMatrix.
+  checkMatrix(distanceMatrix, type="distanceMatrix")
+
   # Convert to matrix, perform computation, convert back to data frame for user.
   asMatrix <- as.matrix(distanceMatrix)
 
@@ -91,6 +94,9 @@ getDistancesByMapping <- function(distanceMatrix, mapping){
 #'
 #' @export
 getRanksByMapping <- function(rankMatrix, mapping){
+
+  # Error checking for rankMatrix.
+  checkMatrix(rankMatrix, type="rankMatrix")
 
   # Convert to matrix, perform computation, convert back to data frame for user.
   asMatrix <- as.matrix(rankMatrix)
