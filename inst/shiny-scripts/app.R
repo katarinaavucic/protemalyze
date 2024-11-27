@@ -10,22 +10,40 @@ ui <- fluidPage(
   # App title ----
   titlePanel("protemalyze"),
 
+  p("protemalyze is an R package designed to analyze protein embeddings derived
+    from protein Language Models (pLMs). Protein embeddings are numerical
+    representations of protein sequences, where each protein is mapped to a
+    fixed-length vector in a high-dimensional space. Run protemalyze on your
+    own embedding matrix or use our pre-built example."),
+
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
 
     # Sidebar panel for inputs ----
     sidebarPanel(width = 3,
       # Input file for Embedding Matrix (required).
+      h4("Embedding Matrix"),
+      p("An embedding matrix generated from a protein Language Model in a csv,
+        tsv, or h5 file. The embedding matrix must have proteins in the rows
+        with the identifier in the index and embedding dimensions in the
+        columns. If stored in an h5 file, this function assumes each row is a
+        dataset under the root path."),
+      downloadButton("downloadExampleEmbeddings",
+                     "Download Example"),
       # Refrences https://shiny.posit.co/r/gallery/widgets/file-upload/
       fileInput("embeddingFile", "Input Embedding Matrix File",
                 accept = c(".csv", ".tsv", ".h5")),
 
       # Input file for Mapping (optional).
+      h4("Mapping (Optional)"),
+      p("A table with two columns of protein identifiers matching the
+        identifiers used for the embedding matrix in a csv file."),
+      downloadButton("downloadExampleMapping",
+                     "Download Example"),
       # Refrences https://shiny.posit.co/r/gallery/widgets/file-upload/
       fileInput("mappingFile", "Optional: Input Mapping File",
-                accept = c(".csv", ".tsv")),
+                accept = c(".csv")),
 
-      # TODO: add inputs for specifying distance metrics, threads, etc.
 
       # Checkbox for showing additional parameters.
       checkboxInput("showDistanceParams",
@@ -35,8 +53,17 @@ ui <- fluidPage(
       # Conditional panel for additional distance matrix parameters.
       conditionalPanel(
         condition = "input.showDistanceParams == true",
+
         # Input for distance metric.
         textInput("distMetric", "Distance Metric", value = "euclidean"),
+        p("The metric to use for the distance matrix calculation. Valid metrics
+          are: bhjattacharyya, bray, canberra, chord, divergence, dtw,
+          euclidean, fJaccard, geodesic, hellinger, kullback, mahalanobis,
+          maximum, minkowski, podani, soergel, wave, whittaker, binary,
+          braun-blanquet, dice, fager, faith, hamman, kulczynski1, kulczynski2,
+          michael, mountford, mozley, ochiai, phi, russel, simple matching,
+          simpson, stiles, tanimoto, yule, yule2, cosine, hamming"),
+
         # Input for number of threads.
         numericInput("numThreads", "Number of Threads", value = NULL),
         p("It is reccomended that you keep the number of threads as the default,
@@ -65,7 +92,7 @@ ui <- fluidPage(
                   tabPanel("Mapping Ranks & Distances",
                            uiOutput("mappingTabContent"))
       )
-    )
+    ),
   )
 )
 
@@ -88,6 +115,32 @@ server <- function(input, output) {
     mapping <- read.csv(input$mappingFile$datapath)
     return(mapping)
   })
+
+  # Return button to download the example embedding matrix.
+  # References
+  # https://shiny.posit.co/r/reference/shiny/0.11/downloadhandler.html
+  output$downloadExampleEmbeddings <- downloadHandler(
+    filename = function() {
+      paste('SARSCoV2EmbeddingMatrix', Sys.Date(), '.csv', sep='')
+    },
+    content = function(file) {
+      write.csv(SARSCoV2EmbedddingMatrix, file)
+    }
+  )
+
+  # Return button to download the example mapping
+  # References
+  # https://shiny.posit.co/r/reference/shiny/0.11/downloadhandler.html
+  output$downloadExampleMapping <- downloadHandler(
+    filename = function() {
+      paste('SARSCoV2Mapping', Sys.Date(), '.csv', sep='')
+    },
+    content = function(file) {
+      write.csv(SARSCoV2Mapping, file, row.names=FALSE)
+    }
+  )
+
+
 
   # Run analysis when action button is clicked.
   observeEvent(input$runButton, {
