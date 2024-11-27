@@ -98,10 +98,6 @@ checkMatrix <- function(matrix, type=NULL) {
     }
   }
   else if (type == "distanceMatrix") {
-    ## Error if the distance matrix is not symmetric.
-    #if (!identical(matrix, t(matrix))) {
-    #  stop("Error: For a 'distanceMatrix', the matrix must be symmetric.")
-    #}
     # Error if the column names do not exist.
     if (is.null(colnames(matrix)) || all(colnames(matrix) == "")) {
       stop("Error: The input 'distanceMatrix' must have column names that are
@@ -123,10 +119,6 @@ checkMatrix <- function(matrix, type=NULL) {
     }
   }
   else if (type == "rankMatrix") {
-    # Error if the rank matrix is not symmetric.
-    if (!identical(matrix, t(matrix))) {
-      stop("Error: For a 'rankMatrix', the matrix must be symmetric.")
-    }
     # Error if the column names do not exist.
     if (is.null(colnames(matrix)) || all(colnames(matrix) == "")) {
       stop("Error: The input 'rankMatrix' must have column names that are
