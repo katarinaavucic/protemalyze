@@ -6,6 +6,8 @@
 # https://shiny.posit.co/r/reference/shiny/1.8.0/fluidpage.html
 # DT (include citation)
 # https://shiny.posit.co/r/articles/build/datatables/
+# downlaod
+# https://shiny.posit.co/r/reference/shiny/0.11/downloadhandler.html
 
 library(shiny)
 library(plotly)
@@ -21,13 +23,13 @@ options(shiny.maxRequestSize = 50 * 1024^2)
 ui <- fluidPage(
 
   # App title ----
-  titlePanel("Tabsets"),
+  titlePanel("protemalyze"),
 
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
 
     # Sidebar panel for inputs ----
-    sidebarPanel(
+    sidebarPanel(width = 3,
       # Input file for Embedding Matrix (required).
       fileInput("embeddingFile", "Input Embedding Matrix File",
                 accept = c(".csv", ".tsv", ".h5")),
@@ -50,10 +52,15 @@ ui <- fluidPage(
       # Output tabset with UMAP, Pairs, and Mapping Analysis ----
       tabsetPanel(type = "tabs",
                   tabPanel("Embedding UMAP", plotlyOutput("umapPlot")),
-                  tabPanel("Closest and Farthest Pairs", DTOutput("pairsTable")),
+                  tabPanel("Closest and Farthest Pairs", fluidRow(
+                    h3("Closest and Farthest Pairs Table"),
+                    downloadLink('downloadPairs', 'Download Table'),
+                    DTOutput("pairsTable"))),
                   tabPanel("Mapping Ranks & Distances", fluidRow(
+                    column(12,
+                           h3("Distance and Rank Table"),
+                           downloadLink('downloadMapping', 'Download Table')),
                     column(6,
-                           h4("Distance and Rank Table"),
                            DTOutput("mappingTable")),
                     column(6,
                            h4("Distance Distribution"),
@@ -108,6 +115,16 @@ server <- function(input, output) {
     combinedPairsTable <- dplyr::left_join(closestPairs, farthestPairs,
                                            by = "Protein")
 
+    # Return button to download the table.
+    output$downloadPairs <- downloadHandler(
+      filename = function() {
+        paste('closest_and_farthest_pairs_', Sys.Date(), '.csv', sep='')
+      },
+      content = function(file) {
+        write.csv(combinedPairsTable, file)
+      }
+    )
+
     # Render the closest and farthest pairs table.
     output$pairsTable <- renderDT({
       return(datatable(combinedPairsTable,
@@ -130,12 +147,22 @@ server <- function(input, output) {
       rankPlot <- visualizeRankDistribution(rankMatrix, mapping)
 
       # Merge mappingDistances and mappingRanks on Protein1 and Protein2
-      combinedTable <- dplyr::left_join(mappingDistances, mappingRanks,
-                                        by = c("Protein1", "Protein2"))
+      combinedMappingTable <- dplyr::left_join(mappingDistances, mappingRanks,
+                                               by = c("Protein1", "Protein2"))
+
+      # Return button to download the table.
+      output$downloadMapping <- downloadHandler(
+        filename = function() {
+          paste('mapping_distances_and_ranks_', Sys.Date(), '.csv', sep='')
+        },
+        content = function(file) {
+          write.csv(combinedMappingTable, file)
+        }
+      )
 
       # Render the distance and rank table for the mapping.
       output$mappingTable <- renderDT({
-        return(datatable(combinedTable,
+        return(datatable(combinedMappingTable,
                          options = list(pageLength = 10,
                                         lengthMenu = c(10, 20, 50, 100))))
       })
