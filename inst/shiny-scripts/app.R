@@ -68,11 +68,6 @@ ui <- fluidPage(
           braun-blanquet, dice, fager, faith, hamman, kulczynski1, kulczynski2,
           michael, mountford, mozley, ochiai, phi, russel, simple matching,
           simpson, stiles, tanimoto, yule, yule2, cosine, hamming"),
-
-        # Input for number of threads.
-        numericInput("numThreads", "Number of Threads", value = NULL),
-        p("It is reccomended that you keep the number of threads as the default,
-          which automatically uses all available threads.")
       ),
 
       # Action button to run the analysis.
@@ -160,17 +155,9 @@ server <- function(input, output) {
         return(visualizeEmbeddingUMAP(embeddingMatrixData))
       })
 
-      # Check if numThreads is a valid option
-      if (is.integer(input$numThreads)) {
-        threads <- input$numThreads
-      } else {
-        threads <- NULL
-      }
-
       # Generate necessary tables for general analysis.
       distMatrix <- generateDistanceMatrix(embeddingMatrixData,
-                                           metric=input$distMetric,
-                                           threads=threads)
+                                           metric=input$distMetric)
       rankMatrix <- generateRankMatrix(distMatrix)
       closestPairs <- getClosestPairs(rankMatrix)
       farthestPairs <- getFarthestPairs(rankMatrix)
