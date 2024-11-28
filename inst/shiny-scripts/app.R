@@ -129,7 +129,7 @@ server <- function(input, output) {
       paste('SARSCoV2EmbeddingMatrix', Sys.Date(), '.csv', sep='')
     },
     content = function(file) {
-      write.csv(SARSCoV2EmbedddingMatrix, file)
+      write.csv(SARSCoV2EmbeddingMatrix, file)
     }
   )
 
