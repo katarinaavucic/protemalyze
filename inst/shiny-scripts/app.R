@@ -1,4 +1,9 @@
 
+library(shiny)
+library(plotly)
+library(DT)
+library(dplyr)
+
 # Set the upload limit to 50MB
 # References https://mastering-shiny.org/action-transfer.html
 options(shiny.maxRequestSize = 50 * 1024^2)
